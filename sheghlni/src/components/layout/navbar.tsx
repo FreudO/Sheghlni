@@ -46,7 +46,6 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
   ).length;
 
   const isDark = variant === "dark";
-  const mobileLinks = landing ? landingNavLinks : appNavLinks;
 
   return (
     <header

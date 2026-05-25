@@ -18,7 +18,6 @@ const TRENDING_CATEGORIES = [
 const HERO_FIELD_LABEL = "text-caption text-ink-500";
 const HERO_FIELD_INPUT =
   "border-0 bg-transparent text-body text-ink-900 outline-none placeholder:text-ink-400";
-const HERO_DIVIDER = "border-ink-100";
 
 const MOBILE_INPUT =
   "h-14 w-full rounded-2xl border border-ink-100 bg-cream-50 px-4 text-[0.9375rem] text-ink-900 outline-none placeholder:text-ink-400 focus-visible:ring-2 focus-visible:ring-cta/40 [color-scheme:light]";
