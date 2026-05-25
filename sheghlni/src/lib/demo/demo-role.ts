@@ -27,5 +27,5 @@ export function enableDemoModeFromUrl(): void {
 }
 
 export function getRoleHomePath(role: DemoRole): string {
-  return role === "pro" ? "/pro/dashboard/" : "/";
+  return role === "pro" ? "/pro/" : "/";
 }

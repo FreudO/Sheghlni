@@ -1,10 +1,5 @@
-import { StubPage } from "@/components/stub-page";
+import { BecomeAProContent } from "@/components/become-a-pro/become-a-pro-content";
 
 export default function BecomeAProPage() {
-  return (
-    <StubPage
-      title="Become a Pro"
-      description="Join Sheghlni and start earning from your skills."
-    />
-  );
+  return <BecomeAProContent />;
 }

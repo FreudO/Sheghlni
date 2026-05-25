@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, Search } from "lucide-react";
+import { ProModeToggle } from "@/components/auth/pro-mode-toggle";
 import { NotificationsDropdown } from "@/components/notifications/notifications-dropdown";
 import { MobileNavDrawer } from "@/components/layout/mobile-nav-drawer";
 import { SheghlniLogo } from "@/components/layout/sheghlni-logo";
@@ -120,6 +121,7 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
               </div>
 
               <div className="ml-auto hidden items-center gap-1 sm:gap-2 md:flex">
+                <ProModeToggle />
                 <NotificationsDropdown />
 
                 <ThemeToggle variant="light" />
@@ -168,6 +170,7 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
               </div>
 
               <div className="ml-auto flex items-center gap-1 md:hidden">
+                <ProModeToggle />
                 <NotificationsDropdown />
                 <button
                   type="button"
