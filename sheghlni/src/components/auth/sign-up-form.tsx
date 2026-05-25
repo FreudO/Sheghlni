@@ -165,7 +165,7 @@ export function SignUpForm() {
           disabled={submitting}
           className="h-11 w-full rounded-full bg-cta text-sm font-semibold text-white hover:bg-cta-hover"
         >
-          {submitting ? "Sending…" : "Send magic link"}
+          {submitting ? "Sending…" : "Send link"}
         </Button>
       </form>
 

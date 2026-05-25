@@ -38,7 +38,7 @@ export function SignInForm() {
     window.setTimeout(() => {
       setSubmitting(false);
       setSent(true);
-      toast.success("Magic link sent.");
+      toast.success("Link sent.");
     }, 600);
   };
 
@@ -107,7 +107,7 @@ export function SignInForm() {
           disabled={submitting}
           className="h-11 w-full rounded-full bg-cta text-sm font-semibold text-white hover:bg-cta-hover"
         >
-          {submitting ? "Sending…" : "Send magic link"}
+          {submitting ? "Sending…" : "Send link"}
         </Button>
       </form>
 

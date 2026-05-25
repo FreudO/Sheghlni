@@ -35,6 +35,7 @@ type MobileNavDrawerProps = {
   themeVariant: "dark" | "light";
   title?: string;
   showProviderToggle?: boolean;
+  guest?: boolean;
 };
 
 const linkClass =
@@ -47,15 +48,17 @@ export function MobileNavDrawer({
   themeVariant,
   title = "Menu",
   showProviderToggle = false,
+  guest = false,
 }: MobileNavDrawerProps) {
   const router = useRouter();
   const isDark = themeVariant === "dark";
   const [isProvider, setIsProvider] = useState(false);
 
   useEffect(() => {
+    if (guest) return;
     setIsProvider(getIsProMode());
     return subscribeProMode(() => setIsProvider(getIsProMode()));
-  }, [open]);
+  }, [open, guest]);
 
   const identity = isProvider
     ? DEMO_PROVIDER_IDENTITY
@@ -76,34 +79,45 @@ export function MobileNavDrawer({
             isDark ? "border-white/10" : "border-border",
           )}
         >
-          <div className="flex items-center gap-3 pr-10">
-            <span
-              aria-hidden
-              className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-bronze-500 text-base font-semibold text-white"
+          {guest ? (
+            <SheetTitle
+              className={cn(
+                "font-display text-lg font-semibold",
+                isDark ? "text-cream-50" : "text-text-primary",
+              )}
             >
-              {identity.initial}
-            </span>
-            <div className="min-w-0">
-              <SheetTitle
-                className={cn(
-                  "font-display text-lg font-semibold",
-                  isDark ? "text-cream-50" : "text-text-primary",
-                )}
+              {title}
+            </SheetTitle>
+          ) : (
+            <div className="flex items-center gap-3 pr-10">
+              <span
+                aria-hidden
+                className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-bronze-500 text-base font-semibold text-white"
               >
-                Hi, {identity.firstName}
-              </SheetTitle>
-              <p
-                className={cn(
-                  "truncate text-sm",
-                  isDark ? "text-cream-200/80" : "text-text-tertiary",
-                )}
-              >
-                {isProvider
-                  ? DEMO_PROVIDER_IDENTITY.businessName
-                  : title}
-              </p>
+                {identity.initial}
+              </span>
+              <div className="min-w-0">
+                <SheetTitle
+                  className={cn(
+                    "font-display text-lg font-semibold",
+                    isDark ? "text-cream-50" : "text-text-primary",
+                  )}
+                >
+                  Hi, {identity.firstName}
+                </SheetTitle>
+                <p
+                  className={cn(
+                    "truncate text-sm",
+                    isDark ? "text-cream-200/80" : "text-text-tertiary",
+                  )}
+                >
+                  {isProvider
+                    ? DEMO_PROVIDER_IDENTITY.businessName
+                    : title}
+                </p>
+              </div>
             </div>
-          </div>
+          )}
         </SheetHeader>
 
         {showProviderToggle && (
@@ -138,7 +152,7 @@ export function MobileNavDrawer({
               {link.label}
             </Link>
           ))}
-          {isProvider && (
+          {!guest && isProvider && (
             <button
               type="button"
               onClick={() => {

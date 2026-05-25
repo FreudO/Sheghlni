@@ -50,6 +50,7 @@ export function LayoutBody({ children }: LayoutBodyProps) {
       <Navbar
         variant={useDarkNavbar ? "dark" : "light"}
         landing={isLanding}
+        guest={isAuth}
       />
       <PageShell
         fullWidth={isFullWidthPath(pathname) || isBecomeAPro || isAuth}

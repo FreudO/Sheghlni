@@ -17,7 +17,16 @@ import { cn } from "@/lib/utils";
 type NavbarProps = {
   variant?: "dark" | "light";
   landing?: boolean;
+  /** Sign-in / sign-up — no logged-in account UI */
+  guest?: boolean;
 };
+
+const guestNavLinks = [
+  { href: "/search/", label: "Browse" },
+  { href: "/become-a-pro/", label: "Become a provider" },
+  { href: "/sign-in/", label: "Sign in" },
+  { href: "/sign-up/", label: "Get started", variant: "cta" as const },
+];
 
 const landingNavLinks = [
   { href: "/search/", label: "Browse" },
@@ -45,22 +54,35 @@ const providerNavLinks = [
   { href: "/search/", label: "Browse as customer" },
 ];
 
-export function Navbar({ variant = "light", landing = false }: NavbarProps) {
+export function Navbar({
+  variant = "light",
+  landing = false,
+  guest = false,
+}: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isProvider, setIsProvider] = useState(false);
 
   useEffect(() => {
+    if (guest) return;
     setIsProvider(getIsProMode());
     return subscribeProMode(() => setIsProvider(getIsProMode()));
-  }, []);
+  }, [guest]);
 
   const isDark = variant === "dark";
-  const mobileLinks = isProvider ? providerNavLinks : customerNavLinks;
-  const mobileTitle = isProvider
-    ? "Provider account"
-    : landing
-      ? "Explore Sheghlni"
-      : "Your account";
+  const showLoggedInChrome = !guest && !landing;
+  const mobileLinks = guest
+    ? guestNavLinks
+    : isProvider
+      ? providerNavLinks
+      : customerNavLinks;
+  const mobileTitle = guest
+    ? "Explore Sheghlni"
+    : isProvider
+      ? "Provider account"
+      : landing
+        ? "Explore Sheghlni"
+        : "Your account";
+  const desktopGuestLinks = guestNavLinks.filter((link) => link.variant !== "cta");
 
   return (
     <header
@@ -83,8 +105,7 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
           {isDark ? (
             <>
               <nav className="ml-auto hidden items-center gap-6 md:flex">
-                {landingNavLinks
-                  .filter((link) => link.variant !== "cta")
+                {(guest ? desktopGuestLinks : landingNavLinks.filter((link) => link.variant !== "cta"))
                   .map((link) => (
                     <Link
                       key={link.href}
@@ -94,7 +115,7 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
                       {link.label}
                     </Link>
                   ))}
-                <ProviderModeToggle variant="dark" />
+                {!guest && <ProviderModeToggle variant="dark" />}
                 <Link
                   href="/sign-up/"
                   className="inline-flex h-8 shrink-0 items-center justify-center rounded-full bg-cta px-3.5 text-sm font-semibold leading-none text-white no-underline transition ease-default duration-default hover:bg-cta-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
@@ -105,7 +126,7 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
               </nav>
 
               <div className="ml-auto flex items-center gap-1 md:hidden">
-                <ProviderModeToggle variant="dark" />
+                {!guest && <ProviderModeToggle variant="dark" />}
                 <button
                   type="button"
                   onClick={() => setMobileOpen(true)}
@@ -121,7 +142,47 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
                 links={mobileLinks}
                 themeVariant="dark"
                 title={mobileTitle}
-                showProviderToggle
+                guest={guest}
+                showProviderToggle={!guest && !landing}
+              />
+            </>
+          ) : guest ? (
+            <>
+              <nav className="ml-auto hidden items-center gap-6 md:flex">
+                {desktopGuestLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-sm font-medium text-text-secondary transition ease-default duration-default hover:text-text-primary"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <Link
+                  href="/sign-up/"
+                  className="inline-flex h-8 shrink-0 items-center justify-center rounded-full bg-cta px-3.5 text-sm font-semibold leading-none text-white no-underline transition ease-default duration-default hover:bg-cta-hover"
+                >
+                  Get started
+                </Link>
+                <ThemeToggle variant="light" />
+              </nav>
+              <div className="ml-auto flex items-center gap-1 md:hidden">
+                <button
+                  type="button"
+                  onClick={() => setMobileOpen(true)}
+                  className="inline-flex size-11 items-center justify-center rounded-full text-text-secondary hover:bg-bg-elevated-2"
+                  aria-label="Open menu"
+                >
+                  <Menu className="size-5" strokeWidth={ICON_STROKE} />
+                </button>
+              </div>
+              <MobileNavDrawer
+                open={mobileOpen}
+                onOpenChange={setMobileOpen}
+                links={mobileLinks}
+                themeVariant="light"
+                title={mobileTitle}
+                guest
               />
             </>
           ) : (
@@ -142,15 +203,23 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
               </div>
 
               <div className="ml-auto hidden items-center gap-1 sm:gap-2 md:flex">
-                <ProviderModeToggle variant="light" />
-                <NotificationsDropdown />
+                {showLoggedInChrome && (
+                  <>
+                    <ProviderModeToggle variant="light" />
+                    <NotificationsDropdown />
+                  </>
+                )}
                 <ThemeToggle variant="light" />
-                <AccountMenu />
+                {showLoggedInChrome && <AccountMenu />}
               </div>
 
               <div className="ml-auto flex items-center gap-1 md:hidden">
-                <ProviderModeToggle variant="light" />
-                <NotificationsDropdown />
+                {showLoggedInChrome && (
+                  <>
+                    <ProviderModeToggle variant="light" />
+                    <NotificationsDropdown />
+                  </>
+                )}
                 <button
                   type="button"
                   onClick={() => setMobileOpen(true)}
@@ -166,13 +235,13 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
                 links={mobileLinks}
                 themeVariant="light"
                 title={mobileTitle}
-                showProviderToggle
+                showProviderToggle={showLoggedInChrome}
               />
             </>
           )}
         </div>
 
-        {!isDark && !landing && (
+        {!isDark && !landing && !guest && (
           <div className="pb-3 md:hidden">
             <Link
               href="/search/"
