@@ -6,7 +6,7 @@ import {
   Star,
 } from "lucide-react";
 import { Reveal, RevealGroup, RevealItem } from "@/components/landing/reveal";
-import { cn } from "@/lib/utils";
+import { IconWell } from "@/components/ui/icon-well";
 
 const TRUST_ITEMS: {
   title: string;
@@ -43,14 +43,12 @@ const TRUST_ITEMS: {
 function TrustItemCard({
   title,
   description,
-  icon: Icon,
+  icon,
   iconClassName,
 }: (typeof TRUST_ITEMS)[number]) {
   return (
     <article className="flex flex-col items-center rounded-2xl bg-white/5 px-4 py-5 text-center sm:py-6">
-      <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/10">
-        <Icon className={cn("size-6", iconClassName)} strokeWidth={1.5} aria-hidden />
-      </span>
+      <IconWell icon={icon} tone="dark" iconClassName={iconClassName} />
       <h3 className="mt-3 text-base font-semibold leading-tight text-cream-50 sm:font-display sm:text-[1.125rem] sm:font-medium md:text-h3">
         {title}
       </h3>

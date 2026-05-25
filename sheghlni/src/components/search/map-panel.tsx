@@ -89,7 +89,7 @@ export function MapPanel({
             type="button"
             aria-label={provider?.businessName ?? "Provider location"}
             className={cn(
-              "absolute z-10 flex size-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 text-[0.65rem] font-semibold transition ease-default duration-default",
+              "absolute z-10 flex size-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border text-[0.625rem] font-semibold leading-none transition ease-default duration-default",
               active
                 ? "scale-110 border-cream-50 bg-bronze-500 text-cream-50 shadow-lg"
                 : "border-cream-50/90 bg-bronze-600 text-cream-50 hover:scale-105 hover:bg-bronze-500",

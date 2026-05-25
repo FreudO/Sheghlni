@@ -1,3 +1,13 @@
+import type { LucideIcon } from "lucide-react";
+import {
+  BadgeCheck,
+  FileCheck,
+  Shield,
+  ShieldCheck,
+  Sparkles,
+  Star,
+  Zap,
+} from "lucide-react";
 import type { Provider, ProviderBadge, Service, User } from "@/lib/mock";
 import { getProviderPrimaryCategoryName, services, users } from "@/lib/mock";
 
@@ -220,35 +230,54 @@ export function formatResponseTime(minutes: number): string {
 export function getBadgeConfig(badge: ProviderBadge): {
   label: string;
   className: string;
+  icon: LucideIcon;
+  iconClassName: string;
 } | null {
-  const map: Record<ProviderBadge, { label: string; className: string }> = {
+  const map: Record<
+    ProviderBadge,
+    { label: string; className: string; icon: LucideIcon; iconClassName: string }
+  > = {
     "verified-id": {
-      label: "✓ Verified ID",
+      label: "Verified ID",
       className: "bg-[#A8B5A2] text-ink-900",
+      icon: ShieldCheck,
+      iconClassName: "text-sage-500",
     },
     "background-check": {
-      label: "✓ Background check",
+      label: "Background check",
       className: "bg-[#A8B5A2] text-ink-900",
+      icon: BadgeCheck,
+      iconClassName: "text-sage-500",
     },
     "top-rated": {
-      label: "⭐ Top rated",
+      label: "Top rated",
       className: "bg-gold-500 text-ink-900",
+      icon: Star,
+      iconClassName: "text-gold-500",
     },
     "quick-responder": {
-      label: "⚡ Quick responder",
+      label: "Quick responder",
       className: "bg-bronze-600 text-white",
+      icon: Zap,
+      iconClassName: "text-bronze-500",
     },
     premium: {
-      label: "✦ Premium Pro",
+      label: "Premium Pro",
       className: "bg-ink-800 text-cream-200",
+      icon: Sparkles,
+      iconClassName: "text-cream-100",
     },
     "license-verified": {
-      label: "📄 License verified",
+      label: "License verified",
       className: "bg-[#A8B5A2] text-ink-900",
+      icon: FileCheck,
+      iconClassName: "text-bronze-500",
     },
     "insurance-verified": {
-      label: "🛡️ Insured",
+      label: "Insured",
       className: "bg-[#A8B5A2] text-ink-900",
+      icon: Shield,
+      iconClassName: "text-sage-500",
     },
   };
   return map[badge] ?? null;

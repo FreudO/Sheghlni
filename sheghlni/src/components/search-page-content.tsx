@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
+import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { X } from "lucide-react";
 import { FilterBar } from "@/components/search/filter-bar";
@@ -34,14 +34,10 @@ export function SearchPageContent() {
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
   const [draft, setDraft] = useState<SearchState>(applied);
   const [isPending, startTransition] = useTransition();
-  const hasMounted = useRef(false);
 
   useEffect(() => {
-    if (!hasMounted.current) {
-      hasMounted.current = true;
-      const timer = window.setTimeout(() => setInitialLoading(false), 400);
-      return () => window.clearTimeout(timer);
-    }
+    const timer = window.setTimeout(() => setInitialLoading(false), 400);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {

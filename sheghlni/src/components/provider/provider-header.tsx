@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Star } from "lucide-react";
+import { Clock, MapPin, Star } from "lucide-react";
+import { ICON_STROKE, InlineIcon } from "@/components/ui/icon-well";
 import type { Provider, User } from "@/lib/mock";
 import { formatProviderLocation } from "@/lib/mock";
 import {
@@ -46,7 +47,7 @@ export function ProviderHeader({ provider, user }: ProviderHeaderProps) {
 
           <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-text-secondary md:text-body-sm">
             <span className="inline-flex items-center gap-1">
-              <Star className="size-4 fill-star text-star" />
+              <Star className="size-4 fill-star text-star" strokeWidth={ICON_STROKE} />
               <span className="font-medium text-text-primary">
                 {provider.ratingAvg.toFixed(1)}
               </span>
@@ -55,25 +56,37 @@ export function ProviderHeader({ provider, user }: ProviderHeaderProps) {
             <span aria-hidden className="hidden sm:inline">
               ·
             </span>
-            <span>📍 {formatProviderLocation(provider)}</span>
+            <span className="inline-flex items-center gap-1">
+              <InlineIcon icon={MapPin} className="text-ink-400" />
+              {formatProviderLocation(provider)}
+            </span>
             <span aria-hidden className="hidden sm:inline">
               ·
             </span>
-            <span>⏱ {formatResponseTime(provider.responseTimeMinutes)}</span>
+            <span className="inline-flex items-center gap-1">
+              <InlineIcon icon={Clock} className="text-ink-400" />
+              {formatResponseTime(provider.responseTimeMinutes)}
+            </span>
           </p>
 
           <div className="-mx-4 mt-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:mx-0 md:flex-wrap md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">
             {provider.badges.map((badge) => {
               const config = getBadgeConfig(badge);
               if (!config) return null;
+              const BadgeIcon = config.icon;
               return (
                 <span
                   key={badge}
                   className={cn(
-                    "inline-flex shrink-0 items-center rounded-full px-3 py-1 text-caption font-medium",
+                    "inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-caption font-medium",
                     config.className,
                   )}
                 >
+                  <BadgeIcon
+                    className={cn("size-3.5 shrink-0", config.iconClassName)}
+                    strokeWidth={ICON_STROKE}
+                    aria-hidden
+                  />
                   {config.label}
                 </span>
               );

@@ -114,6 +114,31 @@ const config: Config = {
         "icon-md": "1rem",
         "icon-xs": "0.5rem",
       },
+      /** Layout spacing uses --space-* (e.g. p-9 = 96px). Control sizes use rem so h-9 / size-9 match UI expectations. */
+      height: {
+        7: "1.75rem",
+        8: "2rem",
+        9: "2.25rem",
+        10: "2.5rem",
+        11: "2.75rem",
+        12: "3rem",
+      },
+      width: {
+        7: "1.75rem",
+        8: "2rem",
+        9: "2.25rem",
+        10: "2.5rem",
+        11: "2.75rem",
+        12: "3rem",
+      },
+      minHeight: {
+        7: "1.75rem",
+        8: "2rem",
+        9: "2.25rem",
+        10: "2.5rem",
+        11: "2.75rem",
+        12: "3rem",
+      },
       screens: {
         sm: "640px",
         md: "768px",

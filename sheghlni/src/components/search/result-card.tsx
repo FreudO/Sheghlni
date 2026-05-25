@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Clock, Shield, Star, User } from "lucide-react";
+import { Clock, MapPin, Shield, Star, User } from "lucide-react";
+import { ICON_STROKE, InlineIcon } from "@/components/ui/icon-well";
 import type { PricingUnit, Provider } from "@/lib/mock";
 import {
   getProviderPrimaryCategoryName,
@@ -155,7 +156,7 @@ export function ResultCard({
             )}
           >
             <span className="inline-flex items-center gap-1">
-              <Star className="size-3.5 fill-star text-star" />
+              <Star className="size-3.5 fill-star text-star" strokeWidth={ICON_STROKE} />
               <span className="font-medium text-text-primary">
                 {provider.ratingAvg.toFixed(1)}
               </span>
@@ -167,10 +168,13 @@ export function ResultCard({
                 isFastResponder ? "text-sage-500" : "text-text-tertiary",
               )}
             >
-              <Clock className="size-3.5" />
+              <Clock className="size-3.5" strokeWidth={ICON_STROKE} />
               {formatResponseTime(provider.responseTimeMinutes)}
             </span>
-            <span className="text-ink-400">📍 {formatDistance(provider.distanceMi)}</span>
+            <span className="inline-flex items-center gap-1 text-ink-400">
+              <InlineIcon icon={MapPin} />
+              {formatDistance(provider.distanceMi)}
+            </span>
           </div>
 
           {!isMobile && (

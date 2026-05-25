@@ -4,6 +4,7 @@ import type {
   Message,
   Notification,
   Provider,
+  Quote,
   Review,
   SearchFilters,
 } from "./types";
@@ -15,6 +16,7 @@ import {
   messages,
   notifications,
   providers,
+  quotes,
   reviews,
   services,
 } from "./data";
@@ -31,9 +33,8 @@ export {
   messages,
   bookings,
   notifications,
+  quotes,
 } from "./data";
-export { quotes } from "./transactional-data";
-
 function getCategoryIdsForSlug(slug: string): Set<string> {
   const match = categories.find((c) => c.slug === slug);
   if (!match) return new Set();
@@ -310,6 +311,37 @@ export function getMessages(conversationId: string): Message[] {
       (a, b) =>
         new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
     );
+}
+
+export function getConversationById(
+  conversationId: string,
+): Conversation | undefined {
+  return conversations.find((c) => c.id === conversationId);
+}
+
+export function getQuoteById(quoteId: string): Quote | undefined {
+  return quotes.find((q) => q.id === quoteId);
+}
+
+export function getBookingById(bookingId: string): Booking | undefined {
+  return bookings.find((b) => b.id === bookingId);
+}
+
+export function getProviderById(providerId: string): Provider | undefined {
+  return providers.find((p) => p.id === providerId);
+}
+
+export function getProviderUserId(providerId: string): string | undefined {
+  return providers.find((p) => p.id === providerId)?.userId;
+}
+
+export function customerHasBookingWithProvider(
+  customerId: string,
+  providerId: string,
+): boolean {
+  return bookings.some(
+    (b) => b.customerId === customerId && b.providerId === providerId,
+  );
 }
 
 export function getBookings(userId: string): Booking[] {

@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { FilterDrawer, SORT_OPTIONS, getCategoryLabel } from "@/components/search/filter-drawer";
+import { ICON_STROKE } from "@/components/ui/icon-well";
 import { cn } from "@/lib/utils";
 
 type FilterBarProps = {
@@ -62,7 +63,7 @@ export function FilterBar({
             <DropdownMenu>
               <DropdownMenuTrigger className="inline-flex min-h-11 items-center gap-1 rounded-full border border-border bg-bg px-3 text-[0.8125rem] text-text-secondary">
                 {sortLabel}
-                <ChevronDown className="size-3.5" />
+                <ChevronDown className="size-3.5" strokeWidth={ICON_STROKE} />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 {SORT_OPTIONS.map((option) => (
@@ -85,14 +86,14 @@ export function FilterBar({
               className="shrink-0 rounded-full"
               onClick={() => onDrawerOpenChange(true)}
             >
-              <SlidersHorizontal className="size-3.5" />
+              <SlidersHorizontal className="size-3.5" strokeWidth={ICON_STROKE} />
               All filters
             </Button>
 
             <DropdownMenu>
               <DropdownMenuTrigger className="inline-flex h-9 shrink-0 items-center gap-1 rounded-full border border-border bg-bg px-3 text-[0.8rem] text-text-secondary hover:border-cta/40">
                 {getCategoryLabel(state.categorySlug)}
-                <ChevronDown className="size-3.5" />
+                <ChevronDown className="size-3.5" strokeWidth={ICON_STROKE} />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="max-h-64 overflow-y-auto">
                 <DropdownMenuItem onClick={() => onPatch({ categorySlug: undefined })}>
@@ -167,7 +168,7 @@ export function FilterBar({
             <DropdownMenu>
               <DropdownMenuTrigger className="ml-auto hidden h-9 shrink-0 items-center gap-1 rounded-full border border-border bg-bg px-3 text-[0.8rem] text-text-secondary hover:border-cta/40 md:inline-flex">
                 {sortLabel}
-                <ChevronDown className="size-3.5" />
+                <ChevronDown className="size-3.5" strokeWidth={ICON_STROKE} />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 {SORT_OPTIONS.map((option) => (

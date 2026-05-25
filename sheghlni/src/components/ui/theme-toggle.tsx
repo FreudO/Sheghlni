@@ -2,6 +2,7 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
+import { ICON_STROKE } from "@/components/ui/icon-well";
 import { cn } from "@/lib/utils";
 
 type ThemeToggleProps = {
@@ -27,9 +28,9 @@ export function ThemeToggle({ className, variant = "light" }: ThemeToggleProps) 
       aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
     >
       {theme === "dark" ? (
-        <Sun className="size-[1.125rem]" strokeWidth={1.75} />
+        <Sun className="size-[1.125rem]" strokeWidth={ICON_STROKE} />
       ) : (
-        <Moon className="size-[1.125rem]" strokeWidth={1.75} />
+        <Moon className="size-[1.125rem]" strokeWidth={ICON_STROKE} />
       )}
     </button>
   );

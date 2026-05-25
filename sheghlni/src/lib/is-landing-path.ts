@@ -11,5 +11,9 @@ export function isFullWidthPath(pathname: string): boolean {
     pathname.endsWith("/") && pathname.length > 1
       ? pathname.slice(0, -1)
       : pathname;
-  return isLandingPath(pathname) || normalized.startsWith("/search");
+  return (
+    isLandingPath(pathname) ||
+    normalized.startsWith("/search") ||
+    normalized.startsWith("/inbox")
+  );
 }

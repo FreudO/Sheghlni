@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Clock, Heart, Shield, Star, User } from "lucide-react";
+import { Clock, Heart, MapPin, Shield, Star, User } from "lucide-react";
+import { ICON_STROKE, InlineIcon } from "@/components/ui/icon-well";
 import type { PricingUnit, Provider } from "@/lib/mock";
 import { getProviderStartingPrice } from "@/lib/mock";
 import { cn } from "@/lib/utils";
@@ -53,7 +54,7 @@ export function ProviderCard({
   const badges = [
     provider.isTopRated && {
       key: "top-rated",
-      label: "⭐ Top rated",
+      label: "Top rated",
       icon: Star,
       className: "bg-gold-500/15 text-gold-500",
     },
@@ -140,7 +141,7 @@ export function ProviderCard({
           )}
         >
           <span className="inline-flex items-center gap-1 text-body-sm">
-            <Star className="size-3.5 fill-star text-star" />
+            <Star className="size-3.5 fill-star text-star" strokeWidth={ICON_STROKE} />
             <span className="font-medium text-text-primary">
               {provider.ratingAvg.toFixed(1)}
             </span>
@@ -152,11 +153,12 @@ export function ProviderCard({
               isFastResponder ? "text-sage-500" : "text-text-tertiary",
             )}
           >
-            <Clock className="size-3" />
+            <Clock className="size-3.5" strokeWidth={ICON_STROKE} />
             {formatResponseTime(provider.responseTimeMinutes)}
           </span>
-          <span className="text-[0.8125rem] text-ink-400">
-            📍 {formatDistance(provider.distanceMi)}
+          <span className="inline-flex items-center gap-1 text-[0.8125rem] text-ink-400">
+            <InlineIcon icon={MapPin} />
+            {formatDistance(provider.distanceMi)}
           </span>
         </div>
 
@@ -184,7 +186,7 @@ export function ProviderCard({
                 )}
               >
                 {badge.key !== "top-rated" && (
-                  <badge.icon className="size-3 shrink-0" />
+                  <badge.icon className="size-3.5 shrink-0" strokeWidth={ICON_STROKE} />
                 )}
                 {badge.label}
               </span>
@@ -199,14 +201,17 @@ export function ProviderCard({
         aria-pressed={saved}
         onClick={() => setSaved((current) => !current)}
         className={cn(
-          "absolute z-10 inline-flex size-9 items-center justify-center rounded-full border-0 bg-bg/90 backdrop-blur-sm transition ease-default duration-default",
-          isCarousel ? "right-3 top-3" : "right-5 top-5",
+          "absolute z-10 inline-flex size-8 items-center justify-center rounded-full border-0 bg-white/90 shadow-sm backdrop-blur-sm transition ease-default duration-default dark:bg-ink-900/75",
+          isCarousel ? "right-2.5 top-2.5" : "right-4 top-4",
           saved
             ? "text-clay-500"
-            : "text-text-secondary hover:text-text-primary",
+            : "text-ink-500 hover:text-text-primary dark:text-cream-200",
         )}
       >
-        <Heart className={cn("size-4", saved && "fill-current")} />
+        <Heart
+          className={cn("size-3.5", saved && "fill-current")}
+          strokeWidth={ICON_STROKE}
+        />
       </button>
     </article>
   );

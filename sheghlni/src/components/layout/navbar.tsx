@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { DEMO_USER_ID, getNotifications } from "@/lib/mock";
+import { ICON_STROKE } from "@/components/ui/icon-well";
 import { cn } from "@/lib/utils";
 
 type NavbarProps = {
@@ -94,7 +95,7 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
                 className="ml-auto inline-flex size-11 items-center justify-center rounded-full text-cream-100 hover:bg-white/10 md:hidden"
                 aria-label="Open menu"
               >
-                <Menu className="size-5" />
+                <Menu className="size-5" strokeWidth={ICON_STROKE} />
               </button>
               <MobileNavDrawer
                 open={mobileOpen}
@@ -108,7 +109,10 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
             <>
               <div className="mx-4 hidden flex-1 md:block md:max-w-md lg:max-w-lg xl:max-w-xl">
                 <div className="relative">
-                  <Search className="pointer-events-none absolute left-3.5 top-1/2 size-icon-md -translate-y-1/2 text-text-tertiary" />
+                  <Search
+                    className="pointer-events-none absolute left-3.5 top-1/2 size-icon-md -translate-y-1/2 text-text-tertiary"
+                    strokeWidth={ICON_STROKE}
+                  />
                   <Input
                     type="search"
                     placeholder="What do you need help with?"
@@ -128,7 +132,7 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
                       : "Notifications"
                   }
                 >
-                  <Bell className="size-icon-sm" strokeWidth={1.75} />
+                  <Bell className="size-icon-sm" strokeWidth={ICON_STROKE} />
                   {unreadNotifications > 0 && (
                     <span className="absolute right-1.5 top-1.5 size-icon-xs rounded-full bg-clay-500 ring-2 ring-bg" />
                   )}
@@ -182,7 +186,7 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
                 className="ml-auto inline-flex size-11 items-center justify-center rounded-full text-text-secondary hover:bg-bg-elevated-2 md:hidden"
                 aria-label="Open menu"
               >
-                <Menu className="size-5" />
+                <Menu className="size-5" strokeWidth={ICON_STROKE} />
               </button>
               <MobileNavDrawer
                 open={mobileOpen}
@@ -201,7 +205,7 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
               href="/search/"
               className="flex min-h-11 w-full items-center gap-3 rounded-2xl border border-border bg-bg-elevated px-4 text-left text-text-tertiary shadow-sm transition hover:border-cta/30"
             >
-              <Search className="size-5 shrink-0" strokeWidth={1.75} />
+              <Search className="size-5 shrink-0" strokeWidth={ICON_STROKE} />
               <span className="text-[0.9375rem] text-text-tertiary">
                 What do you need help with?
               </span>

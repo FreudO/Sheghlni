@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import {
   CalendarDays,
@@ -10,6 +11,11 @@ import {
   User,
 } from "lucide-react";
 import { DEMO_USER_ID, getConversations } from "@/lib/mock";
+import {
+  getUnreadTotal,
+  subscribeUnread,
+} from "@/lib/messaging/unread-store";
+import { ICON_STROKE } from "@/components/ui/icon-well";
 import { cn } from "@/lib/utils";
 
 const tabs = [
@@ -47,10 +53,18 @@ export function MobileTabBar() {
       ? pathname.slice(0, -1)
       : pathname;
 
-  const unreadMessages = getConversations(DEMO_USER_ID).reduce(
-    (sum, conversation) => sum + conversation.customerUnreadCount,
-    0,
-  );
+  const [unreadMessages, setUnreadMessages] = useState(() => {
+    const fromStore = getUnreadTotal();
+    if (fromStore > 0) return fromStore;
+    return getConversations(DEMO_USER_ID).reduce(
+      (sum, conversation) => sum + conversation.customerUnreadCount,
+      0,
+    );
+  });
+
+  useEffect(() => {
+    return subscribeUnread(() => setUnreadMessages(getUnreadTotal()));
+  }, []);
 
   return (
     <nav
@@ -75,7 +89,7 @@ export function MobileTabBar() {
                 <span className="relative">
                   <Icon
                     className={cn("size-icon-sm", isActive && "fill-bronze-500/15")}
-                    strokeWidth={isActive ? 2.25 : 1.75}
+                    strokeWidth={ICON_STROKE}
                   />
                   {showBadge && (
                     <span className="absolute -right-1.5 -top-1 flex min-h-4 min-w-4 items-center justify-center rounded-full bg-clay-500 px-1 text-[10px] font-semibold text-white">

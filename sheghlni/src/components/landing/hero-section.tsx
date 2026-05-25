@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Search } from "lucide-react";
 import { WhenPicker } from "@/components/landing/when-picker";
+import { ICON_STROKE } from "@/components/ui/icon-well";
 import { cn } from "@/lib/utils";
 
 const TRENDING_CATEGORIES = [
@@ -136,7 +137,7 @@ export function HeroSection() {
               className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cta text-white transition ease-default duration-default hover:bg-cta-hover"
               aria-label="Search"
             >
-              <Search className="h-5 w-5" strokeWidth={2.25} />
+              <Search className="h-5 w-5" strokeWidth={ICON_STROKE} />
             </button>
           </form>
 
@@ -151,6 +152,7 @@ export function HeroSection() {
               <div className="relative">
                 <Search
                   className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-ink-400"
+                  strokeWidth={ICON_STROKE}
                   aria-hidden
                 />
                 <input
@@ -192,7 +194,7 @@ export function HeroSection() {
               type="submit"
               className="mt-1 inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-cta text-base font-semibold text-white transition ease-default duration-default hover:bg-cta-hover"
             >
-              <Search className="size-5" strokeWidth={2.25} />
+              <Search className="size-5" strokeWidth={ICON_STROKE} />
               Search
             </button>
           </form>
