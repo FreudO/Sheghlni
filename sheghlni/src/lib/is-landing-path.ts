@@ -43,3 +43,15 @@ export function isProOnboardingPath(pathname: string): boolean {
       : pathname;
   return normalized.startsWith("/pro/onboarding");
 }
+
+export function isAuthPath(pathname: string): boolean {
+  const normalized =
+    pathname.endsWith("/") && pathname.length > 1
+      ? pathname.slice(0, -1)
+      : pathname;
+  return (
+    normalized === "/sign-in" ||
+    normalized === "/sign-up" ||
+    normalized === "/magic-link-sent"
+  );
+}

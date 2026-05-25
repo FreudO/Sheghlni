@@ -22,6 +22,7 @@ import {
   type BookingStepIndex,
   type TimeSlot,
 } from "@/lib/booking/utils";
+import { toast } from "@/lib/toast";
 
 type BookingFlowContentProps = {
   provider: Provider;
@@ -121,6 +122,7 @@ export function BookingFlowContent({
       setBookingReference(generateBookingReference());
       setIsSubmitting(false);
       setStep(4);
+      toast.success("Booking confirmed.");
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 1500);
   };

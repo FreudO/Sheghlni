@@ -11,6 +11,7 @@ import {
   subscribeSaved,
   toggleProviderSaved,
 } from "@/lib/saved/saved-store";
+import { toast } from "@/lib/toast";
 import { cn } from "@/lib/utils";
 
 type ProviderCardProps = {
@@ -212,7 +213,10 @@ export function ProviderCard({
         onClick={(event) => {
           event.preventDefault();
           event.stopPropagation();
-          toggleProviderSaved(provider.id);
+          const nowSaved = toggleProviderSaved(provider.id);
+          toast.success(
+            nowSaved ? "Saved to your list." : "Removed from saved.",
+          );
         }}
         className={cn(
           "absolute z-10 inline-flex size-8 items-center justify-center rounded-full border-0 bg-white/90 shadow-sm backdrop-blur-sm transition ease-default duration-default dark:bg-ink-900/75",

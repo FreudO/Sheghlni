@@ -6,10 +6,6 @@ const PAGES: Record<string, { title: string; description?: string }> = {
   careers: { title: "Careers" },
   press: { title: "Press" },
   trust: { title: "Trust & Safety" },
-  help: { title: "Help Center" },
-  "sign-in": { title: "Sign in" },
-  "sign-up": { title: "Get started" },
-  account: { title: "Profile" },
 };
 
 export function generateStaticParams() {

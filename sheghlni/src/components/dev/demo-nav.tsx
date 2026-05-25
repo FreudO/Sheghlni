@@ -35,7 +35,10 @@ const DEMO_LINKS = [
   { label: "Pro calendar", href: "/pro/calendar/?demo=true" },
   { label: "Pro earnings", href: "/pro/earnings/?demo=true" },
   { label: "Sign in", href: "/sign-in/?demo=true" },
-  { label: "Pro onboarding", href: "/pro/onboarding/?demo=true" },
+  { label: "Sign up", href: "/sign-up/?demo=true" },
+  { label: "Account settings", href: "/account/?demo=true" },
+  { label: "Help center", href: "/help/?demo=true" },
+  { label: "Terms", href: "/legal/terms/?demo=true" },
 ] as const;
 
 export function DemoNav() {

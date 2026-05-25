@@ -6,6 +6,7 @@ import "@/styles/tokens.css";
 import "./globals.css";
 import { LayoutBody } from "@/components/layout/layout-body";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Sheghlni",
@@ -28,6 +29,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <LayoutBody>{children}</LayoutBody>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

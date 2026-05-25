@@ -22,6 +22,7 @@ import {
   type Quote,
   type QuoteStatus,
 } from "@/lib/mock";
+import { toast } from "@/lib/toast";
 import { setUnreadTotal } from "@/lib/messaging/unread-store";
 
 const CANNED_REPLIES = [
@@ -240,6 +241,7 @@ export function MessagingProvider({ children }: { children: ReactNode }) {
 
       appendMessage(conversationId, optimistic);
       markConversationRead(conversationId);
+      toast.success("Message sent.");
 
       const existing = replyTimers.current.get(conversationId);
       if (existing) clearTimeout(existing);

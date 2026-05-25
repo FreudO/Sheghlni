@@ -10,6 +10,7 @@ import {
   type TimeSlot,
 } from "@/lib/booking/utils";
 import { ICON_STROKE } from "@/components/ui/icon-well";
+import { toast } from "@/lib/toast";
 
 type ConfirmationStepProps = {
   provider: Provider;
@@ -47,6 +48,7 @@ export function ConfirmationStep({
       location: isRemote ? "Online" : location,
       reference: bookingReference,
     });
+    toast.success("Calendar file downloaded.");
   };
 
   return (

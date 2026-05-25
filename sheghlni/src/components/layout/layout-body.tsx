@@ -12,6 +12,7 @@ import {
   isFullWidthPath,
   isLandingPath,
   isProPath,
+  isAuthPath,
   isBecomeAProPath,
   isProOnboardingPath,
 } from "@/lib/is-landing-path";
@@ -28,8 +29,11 @@ export function LayoutBody({ children }: LayoutBodyProps) {
   const isPro = isProPath(pathname);
   const isBecomeAPro = isBecomeAProPath(pathname);
   const isProOnboarding = isProOnboardingPath(pathname);
+  const isAuth = isAuthPath(pathname);
   const useDarkNavbar =
-    isLanding || (isBecomeAPro && theme === "dark");
+    isLanding ||
+    (isAuth && theme === "dark") ||
+    (isBecomeAPro && theme === "dark");
 
   useEffect(() => {
     setIsProvider(getIsProMode());
@@ -37,7 +41,7 @@ export function LayoutBody({ children }: LayoutBodyProps) {
   }, []);
 
   const hideMobileTabBar =
-    isLanding || isBecomeAPro || isProOnboarding;
+    isLanding || isBecomeAPro || isProOnboarding || isAuth;
   const showMobileTabBar =
     !hideMobileTabBar && (isProvider || !isPro);
 
@@ -48,9 +52,9 @@ export function LayoutBody({ children }: LayoutBodyProps) {
         landing={isLanding}
       />
       <PageShell
-        fullWidth={isFullWidthPath(pathname) || isBecomeAPro}
+        fullWidth={isFullWidthPath(pathname) || isBecomeAPro || isAuth}
         reserveMobileTabBar={showMobileTabBar}
-        flushTop={isLanding || isBecomeAPro}
+        flushTop={isLanding || isBecomeAPro || isAuth}
       >
         {children}
       </PageShell>

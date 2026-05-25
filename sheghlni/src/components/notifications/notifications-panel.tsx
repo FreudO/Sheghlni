@@ -12,6 +12,7 @@ import {
   groupNotifications,
   type NotificationGroup,
 } from "@/lib/notifications/format";
+import { toast } from "@/lib/toast";
 
 const GROUP_LABELS: Record<NotificationGroup, string> = {
   today: "Today",
@@ -46,6 +47,7 @@ export function NotificationsPanel({
           type="button"
           onClick={() => {
             markAllNotificationsRead();
+            toast.success("All notifications marked as read.");
           }}
           className="shrink-0 text-xs font-medium text-cta hover:underline"
         >

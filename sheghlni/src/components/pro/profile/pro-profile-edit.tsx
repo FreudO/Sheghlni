@@ -19,6 +19,7 @@ import {
 import type { Service } from "@/lib/mock";
 import { DEMO_PRO_HANDLE, DEMO_PRO_PROVIDER_ID } from "@/lib/mock/pro-data";
 import { ICON_STROKE } from "@/components/ui/icon-well";
+import { toast } from "@/lib/toast";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const HOURS = ["9a", "12p", "3p", "6p"];
@@ -42,6 +43,7 @@ export function ProProfileEdit() {
 
   const handleSave = () => {
     setSaved(true);
+    toast.success("Profile saved.");
     window.setTimeout(() => setSaved(false), 2500);
   };
 

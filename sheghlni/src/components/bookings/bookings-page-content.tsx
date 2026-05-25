@@ -11,6 +11,7 @@ import {
   filterBookingsByTab,
   type BookingsTab,
 } from "@/lib/bookings/utils";
+import { toast } from "@/lib/toast";
 
 export function BookingsPageContent() {
   const allBookings = useMemo(() => getBookings(DEMO_USER_ID), []);
@@ -21,7 +22,6 @@ export function BookingsPageContent() {
   const [reviewModalBooking, setReviewModalBooking] = useState<Booking | null>(
     null,
   );
-  const [toast, setToast] = useState<string | null>(null);
 
   const reviewPromptBooking = useMemo(() => {
     return allBookings.find(
@@ -44,8 +44,7 @@ export function BookingsPageContent() {
   const handleReviewSubmit = () => {
     if (!reviewModalBooking) return;
     setReviewOverrides((prev) => new Set(prev).add(reviewModalBooking.id));
-    setToast("Review posted.");
-    window.setTimeout(() => setToast(null), 3000);
+    toast.success("Review posted.");
   };
 
   return (
@@ -123,14 +122,6 @@ export function BookingsPageContent() {
         />
       )}
 
-      {toast && (
-        <div
-          role="status"
-          className="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] left-1/2 z-50 -translate-x-1/2 rounded-full bg-ink-900 px-5 py-2.5 text-sm font-medium text-cream-50 shadow-lg md:bottom-8"
-        >
-          {toast}
-        </div>
-      )}
     </div>
   );
 }

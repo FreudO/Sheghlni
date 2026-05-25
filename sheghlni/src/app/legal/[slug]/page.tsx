@@ -1,4 +1,5 @@
-import { StubPage } from "@/components/stub-page";
+import { notFound } from "next/navigation";
+import { LegalDocument } from "@/components/legal/legal-document";
 
 const TITLES: Record<string, string> = {
   terms: "Terms of Service",
@@ -16,7 +17,8 @@ type LegalPageProps = {
 };
 
 export default function LegalPage({ params }: LegalPageProps) {
-  const title = TITLES[params.slug] ?? "Legal";
+  const title = TITLES[params.slug];
+  if (!title) notFound();
 
-  return <StubPage title={title} />;
+  return <LegalDocument title={title} />;
 }
