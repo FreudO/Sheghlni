@@ -207,6 +207,13 @@ export interface ServiceAddress {
   lng?: number;
 }
 
+export interface BookingLineItem {
+  description: string;
+  quantity: number;
+  unit: string;
+  totalCents: number;
+}
+
 export interface Booking {
   id: string;
   quoteId: string | null;
@@ -214,6 +221,9 @@ export interface Booking {
   providerId: string;
   providerName: string;
   providerAvatarUrl: string;
+  serviceName: string;
+  jobNotes: string;
+  lineItems: BookingLineItem[];
   serviceAddress: ServiceAddress;
   startsAt: string;
   endsAt: string | null;

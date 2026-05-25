@@ -156,9 +156,15 @@ const config: Config = {
           from: { backgroundPosition: "-200% 0" },
           to: { backgroundPosition: "200% 0" },
         },
+        "booking-pop": {
+          from: { transform: "scale(0)", opacity: "0" },
+          to: { transform: "scale(1)", opacity: "1" },
+        },
       },
       animation: {
         shimmer: "shimmer 1.5s infinite linear",
+        "booking-pop":
+          "booking-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
       },
     },
   },

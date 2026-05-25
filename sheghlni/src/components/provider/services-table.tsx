@@ -3,7 +3,7 @@ import type { PricingUnit, Service } from "@/lib/mock";
 
 type ServicesTableProps = {
   services: Service[];
-  providerHandle: string;
+  providerId: string;
 };
 
 function formatServicePrice(service: Service): string {
@@ -27,7 +27,7 @@ function formatServicePrice(service: Service): string {
   return `From $${min}/${unit}`;
 }
 
-export function ServicesTable({ services, providerHandle }: ServicesTableProps) {
+export function ServicesTable({ services, providerId }: ServicesTableProps) {
   return (
     <section className="mt-8 border-t border-border pt-8 md:mt-12 md:pt-10">
       <h2 className="font-display text-[1.375rem] font-medium text-text-primary md:text-h2">
@@ -48,7 +48,7 @@ export function ServicesTable({ services, providerHandle }: ServicesTableProps) 
                 </td>
                 <td className="px-5 py-4 align-top text-right">
                   <Link
-                    href={`/inbox/?service=${service.id}&provider=${providerHandle}`}
+                    href={`/book/${providerId}/?service=${service.id}`}
                     className="text-sm font-medium text-cta hover:underline"
                   >
                     Request this service
@@ -76,7 +76,7 @@ export function ServicesTable({ services, providerHandle }: ServicesTableProps) 
               {service.description}
             </p>
             <Link
-              href={`/inbox/?service=${service.id}&provider=${providerHandle}`}
+              href={`/book/${providerId}/?service=${service.id}`}
               className="mt-3 inline-flex min-h-11 items-center rounded-full border border-border px-4 text-sm font-medium text-text-primary hover:bg-bg-elevated"
             >
               Request

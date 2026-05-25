@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Bell, Menu, Search } from "lucide-react";
+import { Menu, Search } from "lucide-react";
+import { NotificationsDropdown } from "@/components/notifications/notifications-dropdown";
 import { MobileNavDrawer } from "@/components/layout/mobile-nav-drawer";
 import { SheghlniLogo } from "@/components/layout/sheghlni-logo";
 import {
@@ -14,7 +15,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { DEMO_USER_ID, getNotifications } from "@/lib/mock";
 import { ICON_STROKE } from "@/components/ui/icon-well";
 import { cn } from "@/lib/utils";
 
@@ -42,9 +42,6 @@ const appNavLinks = [
 
 export function Navbar({ variant = "light", landing = false }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const unreadNotifications = getNotifications(DEMO_USER_ID).filter(
-    (n) => !n.readAt,
-  ).length;
 
   const isDark = variant === "dark";
 
@@ -123,20 +120,7 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
               </div>
 
               <div className="ml-auto hidden items-center gap-1 sm:gap-2 md:flex">
-                <Link
-                  href="/account/notifications/"
-                  className="relative inline-flex size-icon shrink-0 items-center justify-center rounded-full text-text-secondary transition ease-default duration-default hover:bg-bg-elevated-2"
-                  aria-label={
-                    unreadNotifications > 0
-                      ? `Notifications, ${unreadNotifications} unread`
-                      : "Notifications"
-                  }
-                >
-                  <Bell className="size-icon-sm" strokeWidth={ICON_STROKE} />
-                  {unreadNotifications > 0 && (
-                    <span className="absolute right-1.5 top-1.5 size-icon-xs rounded-full bg-clay-500 ring-2 ring-bg" />
-                  )}
-                </Link>
+                <NotificationsDropdown />
 
                 <ThemeToggle variant="light" />
 
@@ -169,6 +153,9 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
                     <DropdownMenuItem asChild>
                       <Link href="/inbox/">Inbox</Link>
                     </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/saved/">Saved</Link>
+                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
                       <Link href="/account/settings/">Settings</Link>
@@ -180,14 +167,17 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
                 </DropdownMenu>
               </div>
 
-              <button
-                type="button"
-                onClick={() => setMobileOpen(true)}
-                className="ml-auto inline-flex size-11 items-center justify-center rounded-full text-text-secondary hover:bg-bg-elevated-2 md:hidden"
-                aria-label="Open menu"
-              >
-                <Menu className="size-5" strokeWidth={ICON_STROKE} />
-              </button>
+              <div className="ml-auto flex items-center gap-1 md:hidden">
+                <NotificationsDropdown />
+                <button
+                  type="button"
+                  onClick={() => setMobileOpen(true)}
+                  className="inline-flex size-11 items-center justify-center rounded-full text-text-secondary hover:bg-bg-elevated-2"
+                  aria-label="Open menu"
+                >
+                  <Menu className="size-5" strokeWidth={ICON_STROKE} />
+                </button>
+              </div>
               <MobileNavDrawer
                 open={mobileOpen}
                 onOpenChange={setMobileOpen}

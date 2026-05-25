@@ -1,11 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Clock, Heart, MapPin, Shield, Star, User } from "lucide-react";
 import { ICON_STROKE, InlineIcon } from "@/components/ui/icon-well";
 import type { PricingUnit, Provider } from "@/lib/mock";
 import { getProviderStartingPrice } from "@/lib/mock";
+import {
+  isProviderSaved,
+  subscribeSaved,
+  toggleProviderSaved,
+} from "@/lib/saved/saved-store";
 import { cn } from "@/lib/utils";
 
 type ProviderCardProps = {
@@ -45,8 +50,13 @@ export function ProviderCard({
   className,
   layout = "default",
 }: ProviderCardProps) {
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState(() => isProviderSaved(provider.id));
   const [imageError, setImageError] = useState(false);
+
+  useEffect(() => {
+    setSaved(isProviderSaved(provider.id));
+    return subscribeSaved(() => setSaved(isProviderSaved(provider.id)));
+  }, [provider.id]);
   const startingPrice = getProviderStartingPrice(provider.id);
   const isFastResponder = provider.responseTimeMinutes < 60;
   const isCarousel = layout === "carousel";
@@ -199,7 +209,11 @@ export function ProviderCard({
         type="button"
         aria-label={saved ? "Remove from saved" : "Save provider"}
         aria-pressed={saved}
-        onClick={() => setSaved((current) => !current)}
+        onClick={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          toggleProviderSaved(provider.id);
+        }}
         className={cn(
           "absolute z-10 inline-flex size-8 items-center justify-center rounded-full border-0 bg-white/90 shadow-sm backdrop-blur-sm transition ease-default duration-default dark:bg-ink-900/75",
           isCarousel ? "right-2.5 top-2.5" : "right-4 top-4",

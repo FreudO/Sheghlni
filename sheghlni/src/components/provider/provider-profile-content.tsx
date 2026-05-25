@@ -67,7 +67,7 @@ export function ProviderProfileContent({
       <ProviderAbout provider={provider} user={user} />
       <ServicesTable
         services={getServicesForProvider(provider.id)}
-        providerHandle={provider.handle}
+        providerId={provider.id}
       />
       <AvailabilityPreview days={getAvailabilityPreview(provider.id)} />
       <ProviderPortfolio
@@ -89,7 +89,7 @@ export function ProviderProfileContent({
         </Link>
       </p>
 
-      <StickyBookingBar priceLabel={priceLabel} />
+      <StickyBookingBar priceLabel={priceLabel} providerId={provider.id} />
 
       <GalleryLightbox
         images={allLightboxImages}

@@ -5,9 +5,13 @@ import type { PricingUnit } from "@/lib/mock";
 
 type StickyBookingBarProps = {
   priceLabel: string;
+  providerId: string;
 };
 
-export function StickyBookingBar({ priceLabel }: StickyBookingBarProps) {
+export function StickyBookingBar({
+  priceLabel,
+  providerId,
+}: StickyBookingBarProps) {
   return (
     <div className="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-40 border-t border-border bg-bg-elevated lg:hidden">
       <div className="mx-auto flex h-[4.5rem] max-w-[1280px] items-center gap-3 px-4">
@@ -21,7 +25,7 @@ export function StickyBookingBar({ priceLabel }: StickyBookingBarProps) {
           Message
         </Link>
         <Link
-          href="/bookings/"
+          href={`/book/${providerId}/`}
           className="inline-flex min-h-11 items-center justify-center rounded-full bg-cta px-4 text-sm font-semibold text-white hover:bg-cta-hover"
         >
           Book now

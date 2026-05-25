@@ -14,6 +14,7 @@ export function isFullWidthPath(pathname: string): boolean {
   return (
     isLandingPath(pathname) ||
     normalized.startsWith("/search") ||
-    normalized.startsWith("/inbox")
+    normalized.startsWith("/inbox") ||
+    normalized.startsWith("/book")
   );
 }

@@ -27,6 +27,8 @@ const DEMO_LINKS = [
   },
   { label: "Inbox", href: "/inbox/?demo=true" },
   { label: "Customer bookings", href: "/bookings/?demo=true" },
+  { label: "Saved pros", href: "/saved/?demo=true" },
+  { label: "Notifications", href: "/notifications/?demo=true" },
   { label: "Pro dashboard", href: "/pro/dashboard/?demo=true" },
   { label: "Pro calendar", href: "/pro/calendar/?demo=true" },
   { label: "Pro earnings", href: "/pro/earnings/?demo=true" },

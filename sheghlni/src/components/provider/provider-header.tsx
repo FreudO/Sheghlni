@@ -102,7 +102,7 @@ export function ProviderHeader({ provider, user }: ProviderHeaderProps) {
             Message {firstName}
           </Link>
           <Link
-            href="/bookings/"
+            href={`/book/${provider.id}/`}
             className="inline-flex h-11 items-center justify-center rounded-full bg-cta text-sm font-semibold text-white hover:bg-cta-hover"
           >
             Request booking
@@ -118,7 +118,7 @@ export function ProviderHeader({ provider, user }: ProviderHeaderProps) {
           Message {firstName}
         </Link>
         <Link
-          href="/bookings/"
+          href={`/book/${provider.id}/`}
           className="inline-flex h-[3.25rem] w-full items-center justify-center rounded-full bg-cta text-sm font-semibold text-white hover:bg-cta-hover"
         >
           Request booking

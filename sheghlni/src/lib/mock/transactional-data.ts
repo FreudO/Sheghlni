@@ -412,6 +412,17 @@ export const bookings: Booking[] = [
     providerId: "prov-priya-kapoor",
     providerName: "Priya Kapoor",
     providerAvatarUrl: mockImageUrl("woman,fitness", 200, 200),
+    serviceName: "8-Session Personal Training Package",
+    jobNotes:
+      "First session at Zilker Park. Focus on mobility and core strength. Bring yoga mat.",
+    lineItems: [
+      {
+        description: "8-Session Personal Training Package",
+        quantity: 1,
+        unit: "project",
+        totalCents: 68000,
+      },
+    ],
     serviceAddress: addr("2100 Barton Springs Rd", "Austin", "TX", "78704"),
     startsAt: "2026-05-27T12:00:00.000Z",
     endsAt: "2026-05-27T13:00:00.000Z",
@@ -430,6 +441,17 @@ export const bookings: Booking[] = [
     providerId: "prov-tom-barrett",
     providerName: "Tom Barrett",
     providerAvatarUrl: mockImageUrl("man,tools", 200, 200),
+    serviceName: "Furniture Assembly",
+    jobNotes:
+      "IKEA PAX wardrobe and MALM bed frame. All parts on site in guest room.",
+    lineItems: [
+      {
+        description: "Furniture assembly (2 items)",
+        quantity: 1,
+        unit: "visit",
+        totalCents: 15000,
+      },
+    ],
     serviceAddress: addr("45 Beacon St", "Boston", "MA", "02108"),
     startsAt: "2026-05-29T15:00:00.000Z",
     endsAt: "2026-05-29T17:00:00.000Z",
@@ -448,6 +470,17 @@ export const bookings: Booking[] = [
     providerId: "prov-james-crew",
     providerName: "James Whitfield",
     providerAvatarUrl: mockImageUrl("man,cleaning", 200, 200),
+    serviceName: "Deep Home Cleaning",
+    jobNotes:
+      "Full deep clean before move-in. Kitchen, 2 baths, living areas. Eco-friendly products preferred.",
+    lineItems: [
+      {
+        description: "Deep clean — 6 hours",
+        quantity: 1,
+        unit: "visit",
+        totalCents: 30000,
+      },
+    ],
     serviceAddress: addr("742 Evergreen Terrace", "Chicago", "IL", "60614"),
     startsAt: "2026-04-28T09:00:00.000Z",
     endsAt: "2026-04-28T15:00:00.000Z",
@@ -466,6 +499,16 @@ export const bookings: Booking[] = [
     providerId: "prov-david-kim",
     providerName: "David Kim",
     providerAvatarUrl: mockImageUrl("man,dog", 200, 200),
+    serviceName: "Dog Walking — 90 min",
+    jobNotes: "Biscuit — friendly golden retriever. Use front gate code 4521.",
+    lineItems: [
+      {
+        description: "Dog walking session",
+        quantity: 1,
+        unit: "session",
+        totalCents: 7500,
+      },
+    ],
     serviceAddress: addr("1806 South Congress Ave", "Austin", "TX", "78704"),
     startsAt: "2026-04-10T14:00:00.000Z",
     endsAt: "2026-04-10T15:30:00.000Z",
@@ -484,6 +527,17 @@ export const bookings: Booking[] = [
     providerId: "prov-kevin-walsh",
     providerName: "Kevin Walsh",
     providerAvatarUrl: mockImageUrl("man,tech", 200, 200),
+    serviceName: "Home Network Setup",
+    jobNotes:
+      "Mesh Wi-Fi for 3-bedroom condo. Existing modem in living room closet.",
+    lineItems: [
+      {
+        description: "Network install & configuration",
+        quantity: 1,
+        unit: "project",
+        totalCents: 19500,
+      },
+    ],
     serviceAddress: addr("88 Cambridge St", "Boston", "MA", "02114"),
     startsAt: "2026-02-20T10:00:00.000Z",
     endsAt: "2026-02-20T13:00:00.000Z",
@@ -502,6 +556,16 @@ export const bookings: Booking[] = [
     providerId: "prov-rachel-chen",
     providerName: "Rachel Chen",
     providerAvatarUrl: mockImageUrl("woman,teacher", 200, 200),
+    serviceName: "SAT Math Tutoring — 8 sessions",
+    jobNotes: "Focus on algebra and data analysis. Student prefers evening sessions.",
+    lineItems: [
+      {
+        description: "SAT prep package (8 sessions)",
+        quantity: 1,
+        unit: "project",
+        totalCents: 68000,
+      },
+    ],
     serviceAddress: addr("15 Brattle St", "Cambridge", "MA", "02138"),
     startsAt: "2026-01-08T22:00:00.000Z",
     endsAt: "2026-01-08T23:00:00.000Z",
@@ -520,6 +584,16 @@ export const bookings: Booking[] = [
     providerId: "prov-nina-ortiz",
     providerName: "Nina Ortiz",
     providerAvatarUrl: mockImageUrl("woman,event", 200, 200),
+    serviceName: "Day-of Wedding Coordination",
+    jobNotes: "Outdoor ceremony + reception. Cancelled due to venue change.",
+    lineItems: [
+      {
+        description: "Day-of coordination (8 hrs)",
+        quantity: 1,
+        unit: "project",
+        totalCents: 180000,
+      },
+    ],
     serviceAddress: addr("1200 Barton Creek Blvd", "Austin", "TX", "78735"),
     startsAt: "2026-06-05T16:00:00.000Z",
     endsAt: "2026-06-05T20:00:00.000Z",
@@ -538,6 +612,16 @@ export const bookings: Booking[] = [
     providerId: "prov-carlos-mendoza",
     providerName: "Carlos Mendoza",
     providerAvatarUrl: mockImageUrl("man,painter", 200, 200),
+    serviceName: "Interior Painting — 2 rooms",
+    jobNotes: "Living room + bedroom. Color match to existing trim.",
+    lineItems: [
+      {
+        description: "Interior painting (2 rooms)",
+        quantity: 1,
+        unit: "project",
+        totalCents: 110000,
+      },
+    ],
     serviceAddress: addr("2200 N Halsted St", "Chicago", "IL", "60614"),
     startsAt: "2026-03-01T14:00:00.000Z",
     endsAt: "2026-03-03T18:00:00.000Z",
