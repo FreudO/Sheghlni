@@ -83,7 +83,7 @@ export function ResultCard({
         <Link
           href={`/p/${provider.handle}/`}
           className={cn(
-            "relative shrink-0 overflow-hidden bg-bg-elevated-2",
+            "relative shrink-0 overflow-hidden bg-stone-100",
             isMobile || compact
               ? "aspect-video w-full rounded-t-2xl"
               : "aspect-[4/3] w-full md:h-[120px] md:w-[160px] md:aspect-auto md:rounded-xl",
@@ -102,7 +102,7 @@ export function ResultCard({
               loading="lazy"
               decoding="async"
               onError={() => setImageError(true)}
-              className="size-full object-cover"
+              className="block h-full w-full object-cover"
             />
           )}
         </Link>

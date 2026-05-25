@@ -126,12 +126,17 @@ function ReviewCard({ review }: { review: Review }) {
             <div className="mt-3 flex gap-2">
               {review.photos.map((photo) => (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <div
                   key={photo}
-                  src={photo}
-                  alt=""
-                  className="size-16 rounded-lg object-cover"
-                />
+                  className="relative size-16 shrink-0 overflow-hidden rounded-lg bg-stone-100"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={photo}
+                    alt=""
+                    className="block h-full w-full object-cover"
+                  />
+                </div>
               ))}
             </div>
           )}

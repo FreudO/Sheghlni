@@ -90,7 +90,7 @@ export function ProviderCard({
       <Link href={`/p/${provider.handle}/`} className="block">
         <div
           className={cn(
-            "relative overflow-hidden bg-bg-elevated-2",
+            "relative overflow-hidden bg-stone-100",
             isCarousel
               ? "aspect-video rounded-t-2xl"
               : "aspect-[4/3] rounded-xl",
@@ -109,7 +109,7 @@ export function ProviderCard({
               loading="lazy"
               decoding="async"
               onError={() => setImageError(true)}
-              className="size-full object-cover transition ease-default duration-default group-hover:scale-[1.02]"
+              className="block h-full w-full object-cover transition ease-default duration-default group-hover:scale-[1.02]"
             />
           )}
         </div>

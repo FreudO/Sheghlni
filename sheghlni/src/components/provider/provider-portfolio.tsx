@@ -1,5 +1,11 @@
 "use client";
 
+import {
+  GALLERY_FRAME_CLASS,
+  GalleryMediaImage,
+} from "@/components/provider/gallery-media";
+import { cn } from "@/lib/utils";
+
 type ProviderPortfolioProps = {
   images: string[];
   alt: string;
@@ -22,14 +28,15 @@ export function ProviderPortfolio({
             key={`${image}-${index}`}
             type="button"
             onClick={() => onOpenLightbox(index)}
-            className="aspect-[4/3] overflow-hidden rounded-xl"
+            className={cn(GALLERY_FRAME_CLASS, "aspect-[4/3] w-full rounded-xl")}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={image} alt={`${alt} portfolio ${index + 1}`} className="size-full object-cover" />
+            <GalleryMediaImage
+              src={image}
+              alt={`${alt} portfolio ${index + 1}`}
+            />
           </button>
         ))}
       </div>
     </section>
   );
 }
-

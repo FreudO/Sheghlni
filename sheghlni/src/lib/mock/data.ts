@@ -310,13 +310,13 @@ const providersBase: Omit<Provider, "distanceMi" | "isTopRated">[] = [
       "insurance-verified",
       "quick-responder",
     ],
-    mediaUrls: portfolio([
-      "wedding,photography,gallery-1",
-      "bride,portrait,gallery-2",
-      "couple,outdoor,gallery-3",
-      "wedding,ceremony,gallery-4",
-      "engagement,sunset,gallery-5",
-    ]),
+    mediaUrls: [
+      mockImageUrl("wedding,photography,gallery-1", 1200, 600, 0),
+      mockImageUrl("bride,portrait,gallery-2", 1200, 600, 1),
+      "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800&q=80",
+      mockImageUrl("wedding,ceremony,gallery-4", 1200, 600, 3),
+      mockImageUrl("engagement,sunset,gallery-5", 1200, 600, 4),
+    ],
     heroImageUrl: unsplash("wedding,photographer,hero-sofia", 1200, 600),
   },
   {

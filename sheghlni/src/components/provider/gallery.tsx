@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import { motion, useMotionValue, animate, type PanInfo } from "framer-motion";
+import {
+  GALLERY_FRAME_CLASS,
+  GalleryMediaImage,
+} from "@/components/provider/gallery-media";
 import { cn } from "@/lib/utils";
 
 type GalleryProps = {
@@ -38,31 +42,19 @@ export function Gallery({ images, alt, onOpenLightbox }: GalleryProps) {
           <button
             type="button"
             onClick={() => onOpenLightbox(0)}
-            className="relative overflow-hidden rounded-xl"
+            className={cn(GALLERY_FRAME_CLASS, "h-full min-h-0 rounded-xl")}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={hero}
-              alt={alt}
-              loading="lazy"
-              className="size-full object-cover"
-            />
+            <GalleryMediaImage src={hero} alt={alt} />
           </button>
-          <div className="grid grid-cols-2 grid-rows-2 gap-2">
+          <div className="grid h-full min-h-0 grid-cols-2 grid-rows-2 gap-2">
             {paddedGrid.map((image, index) => (
               <button
                 key={`${image}-${index}`}
                 type="button"
                 onClick={() => onOpenLightbox(Math.min(index + 1, images.length - 1))}
-                className="relative overflow-hidden rounded-xl"
+                className={cn(GALLERY_FRAME_CLASS, "h-full min-h-0 rounded-xl")}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={image}
-                  alt={`${alt} ${index + 2}`}
-                  loading="lazy"
-                  className="size-full object-cover"
-                />
+                <GalleryMediaImage src={image} alt={`${alt} ${index + 2}`} />
               </button>
             ))}
           </div>
@@ -77,22 +69,21 @@ export function Gallery({ images, alt, onOpenLightbox }: GalleryProps) {
       </div>
 
       <div className="relative lg:hidden">
-        <motion.div
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          style={{ x }}
-          onDragEnd={handleDragEnd}
-          className="relative aspect-[4/3] w-full overflow-hidden"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={images[mobileIndex]}
-            alt={`${alt} ${mobileIndex + 1}`}
-            loading="lazy"
-            className="size-full object-cover"
-            onClick={() => onOpenLightbox(mobileIndex)}
-          />
-        </motion.div>
+        <div className={cn(GALLERY_FRAME_CLASS, "aspect-[4/3] w-full")}>
+          <motion.div
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            style={{ x }}
+            onDragEnd={handleDragEnd}
+            className="absolute inset-0"
+          >
+            <GalleryMediaImage
+              src={images[mobileIndex]}
+              alt={`${alt} ${mobileIndex + 1}`}
+              onClick={() => onOpenLightbox(mobileIndex)}
+            />
+          </motion.div>
+        </div>
         <div className="absolute right-4 top-4 rounded-full bg-ink-900/70 px-3 py-1 text-caption text-cream-50">
           {mobileIndex + 1} / {images.length}
         </div>

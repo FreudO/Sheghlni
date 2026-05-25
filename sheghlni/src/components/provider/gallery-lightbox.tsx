@@ -3,6 +3,10 @@
 import { useEffect } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import {
+  GALLERY_FRAME_CLASS,
+  GalleryMediaImage,
+} from "@/components/provider/gallery-media";
 import { cn } from "@/lib/utils";
 
 type GalleryLightboxProps = {
@@ -90,14 +94,14 @@ export function GalleryLightbox({
                   type="button"
                   onClick={() => onIndexChange(thumbIndex)}
                   className={cn(
-                    "h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2",
+                    GALLERY_FRAME_CLASS,
+                    "h-14 w-20 shrink-0 rounded-lg border-2",
                     thumbIndex === index
                       ? "border-bronze-500"
                       : "border-transparent opacity-70",
                   )}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={image} alt="" className="size-full object-cover" />
+                  <GalleryMediaImage src={image} alt="" />
                 </button>
               ))}
             </div>
