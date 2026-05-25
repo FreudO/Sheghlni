@@ -5,6 +5,19 @@ export const DEMO_PRO_PROVIDER_ID = "prov-sofia-reyes";
 export const DEMO_PRO_HANDLE = "sofia-reyes-photo";
 export const DEMO_PRO_FIRST_NAME = "Sofia";
 
+export const DEMO_PROVIDER_IDENTITY = {
+  firstName: "Sofia",
+  fullName: "Sofia Reyes",
+  businessName: "Golden Hour Photography",
+  initial: "S",
+} as const;
+
+export const DEMO_CUSTOMER_IDENTITY = {
+  firstName: "Alex",
+  fullName: "Alex Morgan",
+  initial: "A",
+} as const;
+
 export const proDashboardStats = {
   profileViews: 127,
   profileViewsChangePct: 12,

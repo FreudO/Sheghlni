@@ -1,22 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, Search } from "lucide-react";
-import { ProModeToggle } from "@/components/auth/pro-mode-toggle";
+import { ProviderModeToggle } from "@/components/auth/provider-mode-toggle";
+import { AccountMenu } from "@/components/layout/account-menu";
 import { NotificationsDropdown } from "@/components/notifications/notifications-dropdown";
 import { MobileNavDrawer } from "@/components/layout/mobile-nav-drawer";
 import { SheghlniLogo } from "@/components/layout/sheghlni-logo";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { getIsProMode, subscribeProMode } from "@/lib/auth/pro-mode-store";
 import { ICON_STROKE } from "@/components/ui/icon-well";
+import { DEMO_PRO_HANDLE } from "@/lib/mock/pro-data";
 import { cn } from "@/lib/utils";
 
 type NavbarProps = {
@@ -26,14 +21,14 @@ type NavbarProps = {
 
 const landingNavLinks = [
   { href: "/search/", label: "Browse" },
-  { href: "/become-a-pro/", label: "Become a Pro" },
+  { href: "/become-a-pro/", label: "Become a provider" },
   { href: "/sign-in/", label: "Sign in" },
   { href: "/sign-up/", label: "Get started", variant: "cta" as const },
 ];
 
-const appNavLinks = [
+const customerNavLinks = [
   { href: "/search/", label: "Browse" },
-  { href: "/become-a-pro/", label: "Become a Pro" },
+  { href: "/become-a-pro/", label: "Become a provider" },
   { href: "/inbox/", label: "Inbox" },
   { href: "/bookings/", label: "Bookings" },
   { href: "/account/", label: "Account" },
@@ -41,10 +36,31 @@ const appNavLinks = [
   { href: "/sign-up/", label: "Get started", variant: "cta" as const },
 ];
 
+const providerNavLinks = [
+  { href: "/pro/", label: "Dashboard" },
+  { href: "/pro/calendar/", label: "Calendar" },
+  { href: "/pro/earnings/", label: "Earnings" },
+  { href: "/inbox/", label: "Messages" },
+  { href: `/p/${DEMO_PRO_HANDLE}/`, label: "Public profile" },
+  { href: "/search/", label: "Browse as customer" },
+];
+
 export function Navbar({ variant = "light", landing = false }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isProvider, setIsProvider] = useState(false);
+
+  useEffect(() => {
+    setIsProvider(getIsProMode());
+    return subscribeProMode(() => setIsProvider(getIsProMode()));
+  }, []);
 
   const isDark = variant === "dark";
+  const mobileLinks = isProvider ? providerNavLinks : customerNavLinks;
+  const mobileTitle = isProvider
+    ? "Provider account"
+    : landing
+      ? "Explore Sheghlni"
+      : "Your account";
 
   return (
     <header
@@ -78,6 +94,7 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
                       {link.label}
                     </Link>
                   ))}
+                <ProviderModeToggle variant="dark" />
                 <Link
                   href="/sign-up/"
                   className="inline-flex h-8 shrink-0 items-center justify-center rounded-full bg-cta px-3.5 text-sm font-semibold leading-none text-white no-underline transition ease-default duration-default hover:bg-cta-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
@@ -87,20 +104,24 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
                 <ThemeToggle variant="dark" />
               </nav>
 
-              <button
-                type="button"
-                onClick={() => setMobileOpen(true)}
-                className="ml-auto inline-flex size-11 items-center justify-center rounded-full text-cream-100 hover:bg-white/10 md:hidden"
-                aria-label="Open menu"
-              >
-                <Menu className="size-5" strokeWidth={ICON_STROKE} />
-              </button>
+              <div className="ml-auto flex items-center gap-1 md:hidden">
+                <ProviderModeToggle variant="dark" />
+                <button
+                  type="button"
+                  onClick={() => setMobileOpen(true)}
+                  className="inline-flex size-11 items-center justify-center rounded-full text-cream-100 hover:bg-white/10"
+                  aria-label="Open menu"
+                >
+                  <Menu className="size-5" strokeWidth={ICON_STROKE} />
+                </button>
+              </div>
               <MobileNavDrawer
                 open={mobileOpen}
                 onOpenChange={setMobileOpen}
-                links={landingNavLinks}
+                links={mobileLinks}
                 themeVariant="dark"
-                title="Explore Sheghlni"
+                title={mobileTitle}
+                showProviderToggle
               />
             </>
           ) : (
@@ -111,66 +132,24 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
                     className="pointer-events-none absolute left-3.5 top-1/2 size-icon-md -translate-y-1/2 text-text-tertiary"
                     strokeWidth={ICON_STROKE}
                   />
-                  <Input
+                  <input
                     type="search"
                     placeholder="What do you need help with?"
-                    className="h-10 border-border bg-bg-elevated pl-10"
+                    className="h-10 w-full rounded-lg border border-border bg-bg-elevated pl-10 text-sm outline-none focus-visible:ring-2 focus-visible:ring-cta/40"
                     aria-label="Search services"
                   />
                 </div>
               </div>
 
               <div className="ml-auto hidden items-center gap-1 sm:gap-2 md:flex">
-                <ProModeToggle />
+                <ProviderModeToggle variant="light" />
                 <NotificationsDropdown />
-
                 <ThemeToggle variant="light" />
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger
-                    className={cn(
-                      "inline-flex shrink-0 items-center gap-2 rounded-full border-0 bg-transparent p-0.5",
-                      "transition ease-default duration-default",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cta focus-visible:ring-offset-2 focus-visible:ring-offset-bg",
-                      "lg:hover:bg-bg-elevated-2",
-                    )}
-                  >
-                    <span
-                      aria-hidden
-                      className="inline-flex size-icon items-center justify-center rounded-full border-0 bg-bronze-500 text-sm font-semibold leading-none text-white"
-                    >
-                      A
-                    </span>
-                    <span className="hidden pr-1.5 text-sm font-medium text-text-primary lg:inline">
-                      Alex
-                    </span>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem asChild>
-                      <Link href="/account/">Profile</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/bookings/">Bookings</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/inbox/">Inbox</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/saved/">Saved</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild>
-                      <Link href="/account/settings/">Settings</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/sign-in/">Sign out</Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <AccountMenu />
               </div>
 
               <div className="ml-auto flex items-center gap-1 md:hidden">
-                <ProModeToggle />
+                <ProviderModeToggle variant="light" />
                 <NotificationsDropdown />
                 <button
                   type="button"
@@ -184,9 +163,10 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
               <MobileNavDrawer
                 open={mobileOpen}
                 onOpenChange={setMobileOpen}
-                links={appNavLinks}
+                links={mobileLinks}
                 themeVariant="light"
-                title="Your account"
+                title={mobileTitle}
+                showProviderToggle
               />
             </>
           )}

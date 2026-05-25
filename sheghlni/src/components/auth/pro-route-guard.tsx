@@ -21,7 +21,7 @@ export function ProRouteGuard({ children }: ProRouteGuardProps) {
         return;
       }
       setAllowed(false);
-      router.replace("/become-a-pro/");
+      router.replace("/");
     };
 
     check();
