@@ -42,8 +42,13 @@ export function getUserForProvider(provider: Provider): User | undefined {
 
 export function getProviderGalleryImages(provider: Provider): string[] {
   return [provider.heroImageUrl, ...provider.mediaUrls].filter(
-    (url, index, all) => all.indexOf(url) === index,
-  );
+    (url): url is string => Boolean(url),
+  ).filter((url, index, all) => all.indexOf(url) === index);
+}
+
+/** Hero + full gallery + portfolio slots for lightbox “show all”. */
+export function getProviderAllPhotos(provider: Provider): string[] {
+  return getProviderGalleryImages(provider);
 }
 
 export function getServicesForProvider(providerId: string): Service[] {

@@ -1,4 +1,9 @@
 import { mockImageUrl } from "./mock-image-url";
+import {
+  mediaForProvider,
+  PRO_USER_PHOTO_SLUG,
+  providerAvatarUrl,
+} from "./provider-media";
 import type { Provider, Review, User } from "./types";
 import { categories } from "./categories-data";
 import { DEMO_USER_ID } from "./constants";
@@ -32,7 +37,7 @@ export const users: User[] = [
     id: "user-sofia-reyes",
     email: "sofia@goldenhourphoto.co",
     fullName: "Sofia Reyes",
-    avatarUrl: mockImageUrl("woman,photographer", 200, 200),
+    avatarUrl: proAvatar("user-sofia-reyes"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -42,7 +47,7 @@ export const users: User[] = [
     id: "user-marcus-thompson",
     email: "marcus@thompsonelectric.com",
     fullName: "Marcus Thompson",
-    avatarUrl: mockImageUrl("man,contractor", 200, 200),
+    avatarUrl: proAvatar("user-marcus-thompson"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -52,7 +57,7 @@ export const users: User[] = [
     id: "user-priya-kapoor",
     email: "priya@fitflowaustin.com",
     fullName: "Priya Kapoor",
-    avatarUrl: mockImageUrl("woman,fitness", 200, 200),
+    avatarUrl: proAvatar("user-priya-kapoor"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -62,7 +67,7 @@ export const users: User[] = [
     id: "user-james-crew",
     email: "hello@sparklehomeclean.com",
     fullName: "James Whitfield",
-    avatarUrl: mockImageUrl("man,cleaning", 200, 200),
+    avatarUrl: proAvatar("user-james-crew"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -72,7 +77,7 @@ export const users: User[] = [
     id: "user-elena-vasquez",
     email: "elena@vasquezdesign.studio",
     fullName: "Elena Vasquez",
-    avatarUrl: mockImageUrl("woman,designer", 200, 200),
+    avatarUrl: proAvatar("user-elena-vasquez"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -82,7 +87,7 @@ export const users: User[] = [
     id: "user-david-kim",
     email: "david@pawsomepetsatx.com",
     fullName: "David Kim",
-    avatarUrl: mockImageUrl("man,dog", 200, 200),
+    avatarUrl: proAvatar("user-david-kim"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -92,7 +97,7 @@ export const users: User[] = [
     id: "user-rachel-chen",
     email: "rachel@brightpath-tutoring.com",
     fullName: "Rachel Chen",
-    avatarUrl: mockImageUrl("woman,teacher", 200, 200),
+    avatarUrl: proAvatar("user-rachel-chen"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -112,7 +117,7 @@ export const users: User[] = [
     id: "user-amara-johnson",
     email: "amara@curlstudio.la",
     fullName: "Amara Johnson",
-    avatarUrl: mockImageUrl("woman,hair", 200, 200),
+    avatarUrl: proAvatar("user-amara-johnson"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -122,7 +127,7 @@ export const users: User[] = [
     id: "user-tom-barrett",
     email: "tom@barretthandy.com",
     fullName: "Tom Barrett",
-    avatarUrl: mockImageUrl("man,tools", 200, 200),
+    avatarUrl: proAvatar("user-tom-barrett"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -132,7 +137,7 @@ export const users: User[] = [
     id: "user-nina-ortiz",
     email: "nina@ortizevents.com",
     fullName: "Nina Ortiz",
-    avatarUrl: mockImageUrl("woman,event", 200, 200),
+    avatarUrl: proAvatar("user-nina-ortiz"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -142,7 +147,7 @@ export const users: User[] = [
     id: "user-kevin-walsh",
     email: "kevin@walshitsolutions.com",
     fullName: "Kevin Walsh",
-    avatarUrl: mockImageUrl("man,tech", 200, 200),
+    avatarUrl: proAvatar("user-kevin-walsh"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -152,7 +157,7 @@ export const users: User[] = [
     id: "user-lisa-nguyen",
     email: "lisa@shinymobiledetail.com",
     fullName: "Lisa Nguyen",
-    avatarUrl: mockImageUrl("woman,car", 200, 200),
+    avatarUrl: proAvatar("user-lisa-nguyen"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -162,7 +167,7 @@ export const users: User[] = [
     id: "user-michael-ross",
     email: "mross@rossaccounting.com",
     fullName: "Michael Ross",
-    avatarUrl: mockImageUrl("man,business", 200, 200),
+    avatarUrl: proAvatar("user-michael-ross"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -172,7 +177,7 @@ export const users: User[] = [
     id: "user-jasmine-brooks",
     email: "jasmine@lifeconcierge.com",
     fullName: "Jasmine Brooks",
-    avatarUrl: mockImageUrl("woman,professional", 200, 200),
+    avatarUrl: proAvatar("user-jasmine-brooks"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -182,7 +187,7 @@ export const users: User[] = [
     id: "user-omar-hassan",
     email: "omar@hassanplumbing.com",
     fullName: "Omar Hassan",
-    avatarUrl: mockImageUrl("man,plumber", 200, 200),
+    avatarUrl: proAvatar("user-omar-hassan"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -192,7 +197,7 @@ export const users: User[] = [
     id: "user-greta-lindstrom",
     email: "greta@gretamusic.com",
     fullName: "Greta Lindstrom",
-    avatarUrl: mockImageUrl("woman,piano", 200, 200),
+    avatarUrl: proAvatar("user-greta-lindstrom"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -202,7 +207,7 @@ export const users: User[] = [
     id: "user-ryan-foster",
     email: "ryan@fostervideo.co",
     fullName: "Ryan Foster",
-    avatarUrl: mockImageUrl("man,videographer", 200, 200),
+    avatarUrl: proAvatar("user-ryan-foster"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -212,7 +217,7 @@ export const users: User[] = [
     id: "user-diana-flores",
     email: "diana@serenemassageatx.com",
     fullName: "Diana Flores",
-    avatarUrl: mockImageUrl("woman,massage", 200, 200),
+    avatarUrl: proAvatar("user-diana-flores"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -222,7 +227,7 @@ export const users: User[] = [
     id: "user-chris-patelli",
     email: "chris@patellihvac.com",
     fullName: "Chris Patelli",
-    avatarUrl: mockImageUrl("man,hvac", 200, 200),
+    avatarUrl: proAvatar("user-chris-patelli"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -232,7 +237,7 @@ export const users: User[] = [
     id: "user-megan-sullivan",
     email: "megan@beatsbyms.com",
     fullName: "Megan Sullivan",
-    avatarUrl: mockImageUrl("woman,dj", 200, 200),
+    avatarUrl: proAvatar("user-megan-sullivan"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -242,7 +247,7 @@ export const users: User[] = [
     id: "user-tyler-ng",
     email: "tyler@ngdevstudio.com",
     fullName: "Tyler Ng",
-    avatarUrl: mockImageUrl("man,developer", 200, 200),
+    avatarUrl: proAvatar("user-tyler-ng"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -252,7 +257,7 @@ export const users: User[] = [
     id: "user-sandra-bell",
     email: "sandra@cozykittycare.com",
     fullName: "Sandra Bell",
-    avatarUrl: mockImageUrl("woman,cat", 200, 200),
+    avatarUrl: proAvatar("user-sandra-bell"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -262,7 +267,7 @@ export const users: User[] = [
     id: "user-antoine-dupre",
     email: "antoine@tableauprive.com",
     fullName: "Antoine Dupré",
-    avatarUrl: mockImageUrl("man,chef", 200, 200),
+    avatarUrl: proAvatar("user-antoine-dupre"),
     isVerified: true,
     isPro: true,
     isCustomer: false,
@@ -270,12 +275,17 @@ export const users: User[] = [
   },
 ];
 
-function unsplash(keyword: string, w?: number, h?: number): string {
-  return mockImageUrl(keyword, w, h);
+function proAvatar(userId: string): string {
+  const slug = PRO_USER_PHOTO_SLUG[userId];
+  return slug ? providerAvatarUrl(slug) : mockImageUrl("portrait,person", 200, 200);
 }
 
-function portfolio(keywords: string[]): string[] {
-  return keywords.map((k, index) => mockImageUrl(k, 1200, 600, index));
+/** Replaced in providers export by mediaForProvider — stubs keep providersBase valid. */
+function unsplash(_keyword: string, _w?: number, _h?: number): string {
+  return "";
+}
+function portfolio(_keywords: string[]): string[] {
+  return [];
 }
 
 const providersBase: Omit<Provider, "distanceMi" | "isTopRated">[] = [
@@ -1162,6 +1172,7 @@ const PROVIDER_EXTRAS: Record<
 
 export const providers: Provider[] = providersBase.map((provider) => ({
   ...provider,
+  ...mediaForProvider(provider.id),
   ...PROVIDER_EXTRAS[provider.id],
 }));
 

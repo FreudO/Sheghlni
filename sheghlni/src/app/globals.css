@@ -172,6 +172,7 @@
     width: 2rem;
     background: linear-gradient(to left, var(--bg), transparent);
   }
+
   body {
     background-color: var(--bg);
     color: var(--text-primary);

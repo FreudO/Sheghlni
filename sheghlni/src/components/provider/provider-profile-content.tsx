@@ -24,6 +24,7 @@ import {
   getAvailabilityPreview,
   getProviderCredentials,
   getProviderFaqs,
+  getProviderAllPhotos,
   getProviderGalleryImages,
   getServicesForProvider,
 } from "@/lib/provider/profile-data";
@@ -40,16 +41,22 @@ export function ProviderProfileContent({
   reviews,
 }: ProviderProfileContentProps) {
   const galleryImages = getProviderGalleryImages(provider);
-  const portfolioImages = provider.mediaUrls.slice(2);
-  const allLightboxImages = [...galleryImages, ...portfolioImages].filter(
-    (url, index, all) => all.indexOf(url) === index,
-  );
+  const allLightboxImages = getProviderAllPhotos(provider);
+  const portfolioImages = galleryImages.slice(5);
 
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxView, setLightboxView] = useState<"carousel" | "grid">("carousel");
 
   const openLightbox = (index: number) => {
+    setLightboxView("carousel");
     setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const openAllPhotos = () => {
+    setLightboxView("grid");
+    setLightboxIndex(0);
     setLightboxOpen(true);
   };
 
@@ -62,6 +69,7 @@ export function ProviderProfileContent({
         images={galleryImages}
         alt={provider.businessName}
         onOpenLightbox={openLightbox}
+        onShowAllPhotos={openAllPhotos}
       />
 
       <Reveal>
@@ -83,10 +91,7 @@ export function ProviderProfileContent({
         <ProviderPortfolio
           images={portfolioImages}
           alt={provider.businessName}
-          onOpenLightbox={(index) => {
-            const offset = galleryImages.length;
-            openLightbox(offset + index);
-          }}
+          onOpenLightbox={(index) => openLightbox(5 + index)}
         />
       </Reveal>
       <Reveal>
@@ -118,6 +123,7 @@ export function ProviderProfileContent({
         open={lightboxOpen}
         onOpenChange={setLightboxOpen}
         onIndexChange={setLightboxIndex}
+        initialView={lightboxView}
         alt={provider.businessName}
       />
     </>

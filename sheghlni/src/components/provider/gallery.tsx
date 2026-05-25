@@ -12,9 +12,15 @@ type GalleryProps = {
   images: string[];
   alt: string;
   onOpenLightbox: (index: number) => void;
+  onShowAllPhotos: () => void;
 };
 
-export function Gallery({ images, alt, onOpenLightbox }: GalleryProps) {
+export function Gallery({
+  images,
+  alt,
+  onOpenLightbox,
+  onShowAllPhotos,
+}: GalleryProps) {
   const [mobileIndex, setMobileIndex] = useState(0);
   const x = useMotionValue(0);
 
@@ -61,7 +67,7 @@ export function Gallery({ images, alt, onOpenLightbox }: GalleryProps) {
         </div>
         <button
           type="button"
-          onClick={() => onOpenLightbox(0)}
+          onClick={onShowAllPhotos}
           className="absolute bottom-4 right-4 rounded-full bg-bg px-4 py-2 text-sm font-medium text-text-primary shadow-lg"
         >
           Show all photos
@@ -104,7 +110,7 @@ export function Gallery({ images, alt, onOpenLightbox }: GalleryProps) {
         </div>
         <button
           type="button"
-          onClick={() => onOpenLightbox(mobileIndex)}
+          onClick={onShowAllPhotos}
           className="absolute bottom-4 right-4 rounded-full bg-ink-900/65 px-3 py-1.5 text-caption font-medium text-cream-50 backdrop-blur-sm"
         >
           Show all photos

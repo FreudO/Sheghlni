@@ -219,16 +219,19 @@ export function ProviderCard({
           );
         }}
         className={cn(
-          "absolute z-10 inline-flex size-8 items-center justify-center rounded-full border-0 bg-white/90 shadow-sm backdrop-blur-sm transition ease-default duration-default dark:bg-ink-900/75",
-          isCarousel ? "right-2.5 top-2.5" : "right-4 top-4",
-          saved
-            ? "text-clay-500"
-            : "text-ink-500 hover:text-text-primary dark:text-cream-200",
+          "absolute z-10 inline-flex min-h-11 min-w-11 items-center justify-center border-0 bg-transparent transition ease-default duration-default",
+          isCarousel ? "right-1 top-1" : "right-2 top-2",
         )}
       >
         <Heart
-          className={cn("size-3.5", saved && "fill-current")}
-          strokeWidth={ICON_STROKE}
+          className={cn(
+            "size-5 transition ease-default duration-default",
+            "drop-shadow-[0_0_2px_rgba(10,15,31,0.85),0_1px_4px_rgba(10,15,31,0.55)]",
+            saved
+              ? "fill-clay-500 text-clay-500"
+              : "fill-white/25 text-white hover:fill-white/40",
+          )}
+          strokeWidth={saved ? ICON_STROKE : 2}
         />
       </button>
     </article>

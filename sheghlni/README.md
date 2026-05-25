@@ -4,7 +4,7 @@ The Next.js app lives in this folder. See the [repository README](../README.md) 
 
 ```bash
 npm install
-npm run download:photos
+npm run download:photos   # curated Pexels assets (service-matched, ~1400px)
 npm run dev
 ```
 

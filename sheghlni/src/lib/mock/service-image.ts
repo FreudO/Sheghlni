@@ -1,4 +1,5 @@
 export type ServiceSlug =
+  | "cat-care"
   | "photography"
   | "electrician"
   | "fitness"
@@ -31,6 +32,7 @@ type ServiceTheme = {
 };
 
 const THEMES: Record<ServiceSlug, ServiceTheme> = {
+  "cat-care": { label: "Cat Care", from: "#2A2418", to: "#6B5A3E", accent: "#E8C89A" },
   photography: { label: "Photography", from: "#1B2546", to: "#4A3728", accent: "#E8C9A0" },
   electrician: { label: "Electrical", from: "#101935", to: "#2C3E6B", accent: "#F5D76E" },
   fitness: { label: "Fitness", from: "#1A2E24", to: "#3D5A45", accent: "#A8C5A0" },
@@ -57,6 +59,7 @@ const THEMES: Record<ServiceSlug, ServiceTheme> = {
 };
 
 const KEYWORD_RULES: { slug: ServiceSlug; pattern: RegExp }[] = [
+  { slug: "cat-care", pattern: /\bcat\b|kitten|kitty/ },
   { slug: "dj", pattern: /\bdj\b|turntable|vinyl|beats/ },
   { slug: "events", pattern: /event|planning|party|table|floral/ },
   { slug: "photography", pattern: /photo|photographer|camera|engagement|bride|couple|wedding|portrait/ },
@@ -106,6 +109,7 @@ function iconMarkup(slug: ServiceSlug, cx: number, cy: number, scale: number): s
     fitness: `<circle cx="${cx}" cy="${cy - 22 * s}" r="${14 * s}" fill="currentColor"/><path d="M${cx - 30 * s} ${cy + 30 * s} Q${cx} ${cy - 8 * s} ${cx + 30 * s} ${cy + 30 * s}" fill="none" stroke="currentColor" stroke-width="${5 * s}" stroke-linecap="round"/>`,
     cleaning: `<rect x="${cx - 12 * s}" y="${cy - 36 * s}" width="${24 * s}" height="${48 * s}" rx="${6 * s}" fill="currentColor"/><path d="M${cx - 20 * s} ${cy - 36 * s} Q${cx} ${cy - 52 * s} ${cx + 20 * s} ${cy - 36 * s}" fill="none" stroke="currentColor" stroke-width="${4 * s}"/><circle cx="${cx + 28 * s}" cy="${cy - 20 * s}" r="${4 * s}" fill="currentColor" opacity="0.7"/><circle cx="${cx + 36 * s}" cy="${cy - 8 * s}" r="${3 * s}" fill="currentColor" opacity="0.5"/>`,
     design: `<path d="M${cx + 30 * s} ${cy - 30 * s} L${cx - 10 * s} ${cy + 10 * s} L${cx - 30 * s} ${cy + 30 * s} L${cx - 10 * s} ${cy + 10 * s} Z" fill="currentColor"/><circle cx="${cx - 24 * s}" cy="${cy + 24 * s}" r="${6 * s}" fill="currentColor"/>`,
+    "cat-care": `<ellipse cx="${cx}" cy="${cy + 14 * s}" rx="${26 * s}" ry="${20 * s}" fill="currentColor"/><circle cx="${cx - 12 * s}" cy="${cy - 8 * s}" r="${7 * s}" fill="currentColor"/><circle cx="${cx + 12 * s}" cy="${cy - 8 * s}" r="${7 * s}" fill="currentColor"/><path d="M${cx - 20 * s} ${cy - 20 * s} L${cx - 8 * s} ${cy - 12 * s} M${cx + 20 * s} ${cy - 20 * s} L${cx + 8 * s} ${cy - 12 * s}" stroke="currentColor" stroke-width="${4 * s}" stroke-linecap="round"/>`,
     "pet-care": `<circle cx="${cx - 14 * s}" cy="${cy - 10 * s}" r="${8 * s}" fill="currentColor"/><circle cx="${cx + 14 * s}" cy="${cy - 10 * s}" r="${8 * s}" fill="currentColor"/><circle cx="${cx - 24 * s}" cy="${cy + 4 * s}" r="${7 * s}" fill="currentColor"/><circle cx="${cx + 24 * s}" cy="${cy + 4 * s}" r="${7 * s}" fill="currentColor"/><ellipse cx="${cx}" cy="${cy + 16 * s}" rx="${28 * s}" ry="${22 * s}" fill="currentColor"/>`,
     tutoring: `<path d="M${cx - 36 * s} ${cy - 20 * s} L${cx} ${cy - 36 * s} L${cx + 36 * s} ${cy - 20 * s} V${cy + 16 * s} L${cx} ${cy + 32 * s} L${cx - 36 * s} ${cy + 16 * s} Z" fill="none" stroke="currentColor" stroke-width="${4 * s}"/><line x1="${cx}" y1="${cy - 36 * s}" x2="${cx}" y2="${cy + 32 * s}" stroke="currentColor" stroke-width="${3 * s}"/>`,
     painting: `<rect x="${cx - 36 * s}" y="${cy - 28 * s}" width="${48 * s}" height="${36 * s}" rx="${4 * s}" fill="none" stroke="currentColor" stroke-width="${4 * s}"/><rect x="${cx + 8 * s}" y="${cy - 8 * s}" width="${28 * s}" height="${8 * s}" rx="${2 * s}" fill="currentColor"/><rect x="${cx - 4 * s}" y="${cy + 12 * s}" width="${8 * s}" height="${28 * s}" fill="currentColor"/>`,
