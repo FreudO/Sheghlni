@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { X } from "lucide-react";
 import { FilterBar } from "@/components/search/filter-bar";
@@ -9,6 +9,7 @@ import { ResultCard } from "@/components/search/result-card";
 import { SearchEmptyState } from "@/components/search/search-empty-state";
 import { SearchSkeletonList } from "@/components/search/search-skeleton";
 import { getMapPins } from "@/lib/search/map-positions";
+import { cn } from "@/lib/utils";
 import {
   buildSearchParams,
   getResultLocationLabel,
@@ -27,19 +28,21 @@ export function SearchPageContent() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [mapOpen, setMapOpen] = useState(false);
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
   const [draft, setDraft] = useState<SearchState>(applied);
-
-  const paramKey = searchParams.toString();
+  const [isPending, startTransition] = useTransition();
+  const hasMounted = useRef(false);
 
   useEffect(() => {
-    setLoading(true);
-    const timer = window.setTimeout(() => setLoading(false), 600);
-    return () => window.clearTimeout(timer);
-  }, [paramKey]);
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      const timer = window.setTimeout(() => setInitialLoading(false), 400);
+      return () => window.clearTimeout(timer);
+    }
+  }, []);
 
   useEffect(() => {
     if (!drawerOpen) setDraft(applied);
@@ -49,25 +52,34 @@ export function SearchPageContent() {
   const pins = useMemo(() => getMapPins(results), [results]);
   const locationLabel = getResultLocationLabel(applied.city);
 
+  const navigateWithState = useCallback(
+    (state: SearchState) => {
+      const params = buildSearchParams(state);
+      const query = params.toString();
+      const href = query ? `${pathname}?${query}` : pathname;
+      startTransition(() => {
+        router.replace(href);
+      });
+    },
+    [pathname, router],
+  );
+
   const pushState = useCallback(
     (patch: Partial<SearchState>) => {
-      const next = { ...applied, ...patch };
-      const params = buildSearchParams(next, searchParams);
-      const query = params.toString();
-      router.push(query ? `${pathname}?${query}` : pathname);
+      navigateWithState({ ...applied, ...patch });
     },
-    [applied, pathname, router, searchParams],
+    [applied, navigateWithState],
   );
 
   const handleClearFilters = () => {
     setDrawerOpen(false);
-    router.push(pathname);
+    startTransition(() => {
+      router.replace(pathname);
+    });
   };
 
   const handleApplyDrawer = () => {
-    const params = buildSearchParams(draft, searchParams);
-    const query = params.toString();
-    router.push(query ? `${pathname}?${query}` : pathname);
+    navigateWithState(draft);
     setDrawerOpen(false);
   };
 
@@ -93,12 +105,17 @@ export function SearchPageContent() {
 
       <div className="grid flex-1 lg:grid-cols-[3fr_2fr]">
         <section className="min-w-0 px-4 py-6 md:px-6 lg:px-12">
-          {loading ? (
+          {initialLoading ? (
             <SearchSkeletonList />
           ) : results.length === 0 ? (
             <SearchEmptyState onClearFilters={handleClearFilters} />
           ) : (
-            <div className="space-y-4">
+            <div
+              className={cn(
+                "space-y-4 transition-opacity duration-200",
+                isPending && "pointer-events-none opacity-60",
+              )}
+            >
               {results.map((provider) => (
                 <ResultCard
                   key={provider.id}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { categories, getCategoryTree } from "@/lib/mock";
 import type { SearchSort } from "@/lib/mock";
 import type { SearchState } from "@/lib/search/search-params";
@@ -28,6 +28,8 @@ const SPECIALTY_OPTIONS = [
 ] as const;
 const WHEN_OPTIONS = ["Today", "This week", "Pick dates"] as const;
 
+const CATEGORY_TREE = getCategoryTree();
+
 type FilterDrawerProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -50,7 +52,6 @@ export function FilterDrawer({
   onApply,
   onClear,
 }: FilterDrawerProps) {
-  const tree = useMemo(() => getCategoryTree(), []);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   const minPrice = 0;
@@ -72,6 +73,10 @@ export function FilterDrawer({
     onDraftChange({ specialties: next.length > 0 ? next : undefined });
   };
 
+  if (!open) {
+    return <Sheet open={false} onOpenChange={onOpenChange} />;
+  }
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-full max-w-md overflow-y-auto sm:max-w-lg">
@@ -83,36 +88,40 @@ export function FilterDrawer({
           <section>
             <h3 className="text-sm font-semibold text-text-primary">Category</h3>
             <div className="mt-3 space-y-2">
-              {tree.map((top) => (
+              {CATEGORY_TREE.map((top) => (
                 <div key={top.id} className="rounded-lg border border-border p-3">
-                  <label className="flex cursor-pointer items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={draft.categorySlug === top.slug}
-                      onChange={() =>
-                        onDraftChange({
-                          categorySlug:
-                            draft.categorySlug === top.slug ? undefined : top.slug,
-                        })
-                      }
-                      className="size-4 accent-cta"
-                    />
-                    <span className="text-sm font-medium text-text-primary">
-                      {top.name}
-                    </span>
-                    <button
-                      type="button"
-                      className="ml-auto text-caption text-text-tertiary"
-                      onClick={() =>
-                        setExpanded((prev) => ({
-                          ...prev,
-                          [top.id]: !prev[top.id],
-                        }))
-                      }
-                    >
-                      {expanded[top.id] ? "Hide" : "Show"}
-                    </button>
-                  </label>
+                  <div className="flex items-center gap-2">
+                    <label className="flex min-w-0 flex-1 cursor-pointer items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={draft.categorySlug === top.slug}
+                        onChange={() =>
+                          onDraftChange({
+                            categorySlug:
+                              draft.categorySlug === top.slug ? undefined : top.slug,
+                          })
+                        }
+                        className="size-4 shrink-0 accent-cta"
+                      />
+                      <span className="text-sm font-medium text-text-primary">
+                        {top.name}
+                      </span>
+                    </label>
+                    {top.children.length > 0 && (
+                      <button
+                        type="button"
+                        className="shrink-0 text-caption text-text-tertiary hover:text-text-primary"
+                        onClick={() =>
+                          setExpanded((prev) => ({
+                            ...prev,
+                            [top.id]: !prev[top.id],
+                          }))
+                        }
+                      >
+                        {expanded[top.id] ? "Hide" : "Show"}
+                      </button>
+                    )}
+                  </div>
                   {expanded[top.id] && (
                     <div className="mt-2 space-y-1 border-l border-border pl-4">
                       {top.children.map((child) => (

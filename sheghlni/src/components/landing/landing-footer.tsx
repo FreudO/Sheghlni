@@ -202,7 +202,7 @@ export function LandingFooter() {
 
         <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 md:flex-row md:items-center md:justify-between">
           <p className="text-body-sm text-cream-200">
-            © 2025 Sheghlni Inc. All rights reserved.
+            © {new Date().getFullYear()} Sheghlni Inc. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <a
