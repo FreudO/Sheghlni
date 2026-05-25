@@ -40,20 +40,20 @@ export function NotificationsPanel({
 
   return (
     <div className={className}>
-      <div className="flex items-center justify-between border-b border-border px-4 py-3">
-        <h2 className="font-semibold text-text-primary">Notifications</h2>
+      <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-2.5">
+        <h2 className="text-sm font-semibold text-text-primary">Notifications</h2>
         <button
           type="button"
           onClick={() => {
             markAllNotificationsRead();
           }}
-          className="text-sm font-medium text-cta hover:underline"
+          className="shrink-0 text-xs font-medium text-cta hover:underline"
         >
           Mark all as read
         </button>
       </div>
 
-      <div className="max-h-[min(24rem,60vh)] overflow-y-auto px-2 py-2">
+      <div className="scrollbar-subtle max-h-[min(22rem,55vh)] overflow-y-auto overscroll-contain py-1 pr-0.5">
         {notifications.length === 0 ? (
           <p className="px-3 py-8 text-center text-sm text-ink-300">
             You&apos;re all caught up.
@@ -64,11 +64,11 @@ export function NotificationsPanel({
               const items = groups[groupKey];
               if (items.length === 0) return null;
               return (
-                <div key={groupKey} className="mb-2">
-                  <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-ink-300">
+                <div key={groupKey} className="mb-1 last:mb-0">
+                  <p className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wider text-bronze-600/80">
                     {GROUP_LABELS[groupKey]}
                   </p>
-                  <ul>
+                  <ul className="px-1">
                     {items.map((notification) => (
                       <li key={notification.id}>
                         <NotificationItem
@@ -86,11 +86,11 @@ export function NotificationsPanel({
       </div>
 
       {showFooterLink && (
-        <div className="border-t border-border px-4 py-3">
+        <div className="border-t border-border px-4 py-2.5">
           <Link
             href="/notifications/"
             onClick={onNavigate}
-            className="block text-center text-sm font-medium text-cta hover:underline"
+            className="block text-center text-xs font-medium text-cta hover:underline"
           >
             See all notifications
           </Link>

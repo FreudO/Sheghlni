@@ -62,7 +62,7 @@ export function ProShell({ children }: ProShellProps) {
       <div className="mx-auto max-w-6xl px-4 py-6 md:px-6 md:py-8 lg:px-8">
         <nav
           aria-label="Pro navigation"
-          className="mb-8 flex gap-1 overflow-x-auto border-b border-border pb-px [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:gap-0"
+          className="mb-8 hidden gap-1 overflow-x-auto border-b border-border pb-px [-ms-overflow-style:none] [scrollbar-width:none] md:flex md:gap-0 [&::-webkit-scrollbar]:hidden"
         >
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;

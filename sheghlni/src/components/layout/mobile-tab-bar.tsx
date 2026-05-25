@@ -3,56 +3,21 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import {
-  CalendarDays,
-  Home,
-  MessageCircle,
-  Search,
-  User,
-} from "lucide-react";
+import { getIsProMode, subscribeProMode } from "@/lib/auth/pro-mode-store";
 import { DEMO_USER_ID, getConversations } from "@/lib/mock";
 import {
   getUnreadTotal,
   subscribeUnread,
 } from "@/lib/messaging/unread-store";
+import {
+  customerMobileTabs,
+  providerMobileTabs,
+  type MobileTabConfig,
+} from "@/lib/navigation/mobile-tabs";
 import { ICON_STROKE } from "@/components/ui/icon-well";
 import { cn } from "@/lib/utils";
 
-const tabs = [
-  { href: "/", label: "Home", icon: Home, match: (path: string) => path === "/" },
-  {
-    href: "/search/",
-    label: "Search",
-    icon: Search,
-    match: (path: string) => path.startsWith("/search"),
-  },
-  {
-    href: "/inbox/",
-    label: "Inbox",
-    icon: MessageCircle,
-    match: (path: string) => path.startsWith("/inbox"),
-  },
-  {
-    href: "/bookings/",
-    label: "Bookings",
-    icon: CalendarDays,
-    match: (path: string) => path.startsWith("/bookings"),
-  },
-  {
-    href: "/account/",
-    label: "Account",
-    icon: User,
-    match: (path: string) => path.startsWith("/account"),
-  },
-];
-
-export function MobileTabBar() {
-  const pathname = usePathname();
-  const normalizedPath =
-    pathname.endsWith("/") && pathname.length > 1
-      ? pathname.slice(0, -1)
-      : pathname;
-
+function useUnreadMessages() {
   const [unreadMessages, setUnreadMessages] = useState(() => {
     const fromStore = getUnreadTotal();
     if (fromStore > 0) return fromStore;
@@ -66,23 +31,35 @@ export function MobileTabBar() {
     return subscribeUnread(() => setUnreadMessages(getUnreadTotal()));
   }, []);
 
+  return unreadMessages;
+}
+
+function MobileTabBarNav({ tabs }: { tabs: MobileTabConfig[] }) {
+  const pathname = usePathname();
+  const unreadMessages = useUnreadMessages();
+  const normalizedPath =
+    pathname.endsWith("/") && pathname.length > 1
+      ? pathname.slice(0, -1)
+      : pathname;
+
   return (
     <nav
       className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-bg-elevated pb-[env(safe-area-inset-bottom)] md:hidden"
       aria-label="Primary"
     >
-      <ul className="mx-auto flex h-16 max-w-[1280px] items-stretch px-2">
+      <ul className="mx-auto flex h-16 max-w-[1280px] items-stretch px-1">
         {tabs.map((tab) => {
           const isActive = tab.match(normalizedPath);
           const Icon = tab.icon;
-          const showBadge = tab.label === "Inbox" && unreadMessages > 0;
+          const showBadge =
+            tab.showUnreadBadge && unreadMessages > 0;
 
           return (
-            <li key={tab.href} className="flex flex-1">
+            <li key={tab.href} className="flex min-w-0 flex-1">
               <Link
                 href={tab.href}
                 className={cn(
-                  "relative flex flex-1 flex-col items-center justify-center gap-1 transition ease-default duration-default",
+                  "relative flex w-full min-w-0 flex-col items-center justify-center gap-1 px-0.5 transition ease-default duration-default",
                   isActive ? "text-bronze-500" : "text-ink-300",
                 )}
               >
@@ -97,7 +74,7 @@ export function MobileTabBar() {
                     </span>
                   )}
                 </span>
-                <span className="text-[0.6875rem] font-medium leading-none">
+                <span className="w-full truncate text-center text-[0.625rem] font-medium leading-none sm:text-[0.6875rem]">
                   {tab.label}
                 </span>
               </Link>
@@ -107,4 +84,16 @@ export function MobileTabBar() {
       </ul>
     </nav>
   );
+}
+
+export function MobileTabBar() {
+  const [isProvider, setIsProvider] = useState(false);
+
+  useEffect(() => {
+    setIsProvider(getIsProMode());
+    return subscribeProMode(() => setIsProvider(getIsProMode()));
+  }, []);
+
+  const tabs = isProvider ? providerMobileTabs : customerMobileTabs;
+  return <MobileTabBarNav tabs={tabs} />;
 }
