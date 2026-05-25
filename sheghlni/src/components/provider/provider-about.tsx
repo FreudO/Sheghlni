@@ -14,10 +14,12 @@ export function ProviderAbout({ provider, user }: ProviderAboutProps) {
   const isLong = provider.bio.length > 220;
 
   return (
-    <section className="mt-12 border-t border-border pt-10">
-      <h2 className="font-display text-h2 text-text-primary">About</h2>
+    <section className="mt-8 border-t border-border pt-8 md:mt-12 md:pt-10">
+      <h2 className="font-display text-[1.375rem] font-medium text-text-primary md:text-h2">
+        About
+      </h2>
       <p
-        className={`mt-4 text-body text-text-secondary ${!expanded && isLong ? "line-clamp-3" : ""}`}
+        className={`mt-4 text-[0.9375rem] text-text-secondary md:text-body ${!expanded && isLong ? "line-clamp-3" : ""}`}
       >
         {provider.bio}
       </p>

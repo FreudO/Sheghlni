@@ -15,6 +15,7 @@ type ResultCardProps = {
   highlighted?: boolean;
   onHover?: (providerId: string | null) => void;
   compact?: boolean;
+  layout?: "default" | "mobile";
 };
 
 function formatPrice(cents: number, unit: PricingUnit): string {
@@ -45,11 +46,13 @@ export function ResultCard({
   highlighted = false,
   onHover,
   compact = false,
+  layout = "default",
 }: ResultCardProps) {
   const [imageError, setImageError] = useState(false);
   const startingPrice = getProviderStartingPrice(provider.id);
   const categoryLabel = getProviderPrimaryCategoryName(provider.id);
   const isFastResponder = provider.responseTimeMinutes < 60;
+  const isMobile = layout === "mobile";
 
   const badges = [
     provider.isTopRated && "⭐ Top rated",
@@ -62,11 +65,11 @@ export function ResultCard({
     <article
       id={`result-${provider.id}`}
       className={cn(
-        "rounded-2xl border bg-bg transition ease-default duration-default",
+        "overflow-hidden rounded-2xl border bg-bg transition ease-default duration-default",
         highlighted
           ? "border-bronze-500 shadow-md ring-1 ring-bronze-500/30"
           : "border-border hover:border-border hover:shadow-sm",
-        compact ? "p-3" : "p-4",
+        compact ? "p-3" : isMobile ? "p-0" : "p-4",
       )}
       onMouseEnter={() => onHover?.(provider.id)}
       onMouseLeave={() => onHover?.(null)}
@@ -74,14 +77,16 @@ export function ResultCard({
       <div
         className={cn(
           "flex gap-4",
-          compact ? "flex-col" : "flex-col md:flex-row md:items-start",
+          compact ? "flex-col" : isMobile ? "flex-col" : "flex-col md:flex-row md:items-start",
         )}
       >
         <Link
           href={`/p/${provider.handle}/`}
           className={cn(
-            "relative shrink-0 overflow-hidden rounded-xl bg-bg-elevated-2",
-            compact ? "aspect-[4/3] w-full" : "aspect-[4/3] w-full md:h-[120px] md:w-[160px] md:aspect-auto",
+            "relative shrink-0 overflow-hidden bg-bg-elevated-2",
+            isMobile || compact
+              ? "aspect-video w-full rounded-t-2xl"
+              : "aspect-[4/3] w-full md:h-[120px] md:w-[160px] md:aspect-auto md:rounded-xl",
           )}
         >
           {imageError ? (
@@ -102,17 +107,27 @@ export function ResultCard({
           )}
         </Link>
 
-        <div className="min-w-0 flex-1">
+        <div className={cn("min-w-0 flex-1", (isMobile || compact) && "p-4")}>
           <Link href={`/p/${provider.handle}/`} className="group block">
-            <h3 className="font-semibold text-text-primary group-hover:text-cta">
+            <h3
+              className={cn(
+                "font-semibold text-text-primary group-hover:text-cta",
+                isMobile && "text-base",
+              )}
+            >
               {provider.businessName}
             </h3>
-            <p className="mt-0.5 line-clamp-2 text-body-sm text-text-secondary">
+            <p
+              className={cn(
+                "mt-0.5 text-text-secondary",
+                isMobile ? "line-clamp-1 text-[0.8125rem]" : "line-clamp-2 text-body-sm",
+              )}
+            >
               {provider.headline}
             </p>
           </Link>
 
-          {badges.length > 0 && (
+          {badges.length > 0 && !isMobile && (
             <div className="mt-2 flex flex-wrap gap-1.5">
               {badges.slice(0, 3).map((badge) => (
                 <span
@@ -133,9 +148,14 @@ export function ResultCard({
             </div>
           )}
 
-          <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-body-sm">
+          <div
+            className={cn(
+              "mt-2 flex flex-wrap items-center gap-x-2 gap-y-0.5",
+              isMobile ? "text-[0.8125rem]" : "gap-x-3 text-body-sm",
+            )}
+          >
             <span className="inline-flex items-center gap-1">
-              <Star className="size-icon-sm fill-star text-star" />
+              <Star className="size-3.5 fill-star text-star" />
               <span className="font-medium text-text-primary">
                 {provider.ratingAvg.toFixed(1)}
               </span>
@@ -143,19 +163,19 @@ export function ResultCard({
             </span>
             <span
               className={cn(
-                "inline-flex items-center gap-1 text-caption",
+                "inline-flex items-center gap-1",
                 isFastResponder ? "text-sage-500" : "text-text-tertiary",
               )}
             >
               <Clock className="size-3.5" />
               {formatResponseTime(provider.responseTimeMinutes)}
             </span>
-            <span className="text-caption text-ink-400">
-              📍 {formatDistance(provider.distanceMi)}
-            </span>
+            <span className="text-ink-400">📍 {formatDistance(provider.distanceMi)}</span>
           </div>
 
-          <p className="mt-1 text-caption text-text-tertiary">{categoryLabel}</p>
+          {!isMobile && (
+            <p className="mt-1 text-caption text-text-tertiary">{categoryLabel}</p>
+          )}
 
           {startingPrice && (
             <p className="mt-2 text-body-sm font-medium text-text-primary">
@@ -163,20 +183,22 @@ export function ResultCard({
             </p>
           )}
 
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Link
-              href="/inbox/"
-              className="inline-flex h-7 items-center justify-center rounded-full px-3 text-[0.8rem] font-medium text-text-primary transition hover:bg-muted"
-            >
-              Message
-            </Link>
-            <Link
-              href={`/p/${provider.handle}/`}
-              className="inline-flex h-7 items-center justify-center rounded-full border border-border bg-background px-3 text-[0.8rem] font-medium text-text-primary transition hover:bg-muted"
-            >
-              View profile
-            </Link>
-          </div>
+          {!isMobile && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Link
+                href="/inbox/"
+                className="inline-flex min-h-11 items-center justify-center rounded-full px-4 text-[0.8rem] font-medium text-text-primary transition hover:bg-muted"
+              >
+                Message
+              </Link>
+              <Link
+                href={`/p/${provider.handle}/`}
+                className="inline-flex min-h-11 items-center justify-center rounded-full border border-border bg-background px-4 text-[0.8rem] font-medium text-text-primary transition hover:bg-muted"
+              >
+                View profile
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </article>

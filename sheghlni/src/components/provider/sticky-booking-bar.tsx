@@ -16,13 +16,13 @@ export function StickyBookingBar({ priceLabel }: StickyBookingBarProps) {
         </p>
         <Link
           href="/inbox/"
-          className="inline-flex h-10 items-center justify-center rounded-full border border-border px-4 text-sm font-medium text-text-primary"
+          className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-4 text-sm font-medium text-text-primary"
         >
           Message
         </Link>
         <Link
           href="/bookings/"
-          className="inline-flex h-10 items-center justify-center rounded-full bg-cta px-4 text-sm font-semibold text-white"
+          className="inline-flex min-h-11 items-center justify-center rounded-full bg-cta px-4 text-sm font-semibold text-white hover:bg-cta-hover"
         >
           Book now
         </Link>
@@ -45,7 +45,3 @@ export function formatStartingPriceLabel(
   };
   return `From $${dollars}/${unitLabel[price.unit]}`;
 }
-
-
-
-

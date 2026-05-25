@@ -113,7 +113,7 @@ export function LandingFooter() {
 
   return (
     <footer className="bg-ink-900 pb-8 pt-12 text-cream-100">
-      <div className="mx-auto max-w-[1280px] px-6 lg:px-12">
+      <div className="mx-auto max-w-[1280px] px-4 md:px-6 lg:px-12">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
             <div>
               <SheghlniLogo variant="dark" />

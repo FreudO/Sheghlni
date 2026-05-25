@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Bell, Menu, Search } from "lucide-react";
+import { MobileNavDrawer } from "@/components/layout/mobile-nav-drawer";
 import { SheghlniLogo } from "@/components/layout/sheghlni-logo";
 import {
   DropdownMenu,
@@ -12,13 +13,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { DEMO_USER_ID, getNotifications } from "@/lib/mock";
 import { cn } from "@/lib/utils";
@@ -28,10 +22,21 @@ type NavbarProps = {
   landing?: boolean;
 };
 
-const darkNavLinks = [
+const landingNavLinks = [
   { href: "/search/", label: "Browse" },
   { href: "/become-a-pro/", label: "Become a Pro" },
   { href: "/sign-in/", label: "Sign in" },
+  { href: "/sign-up/", label: "Get started", variant: "cta" as const },
+];
+
+const appNavLinks = [
+  { href: "/search/", label: "Browse" },
+  { href: "/become-a-pro/", label: "Become a Pro" },
+  { href: "/inbox/", label: "Inbox" },
+  { href: "/bookings/", label: "Bookings" },
+  { href: "/account/", label: "Account" },
+  { href: "/sign-in/", label: "Sign in" },
+  { href: "/sign-up/", label: "Get started", variant: "cta" as const },
 ];
 
 export function Navbar({ variant = "light", landing = false }: NavbarProps) {
@@ -41,6 +46,7 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
   ).length;
 
   const isDark = variant === "dark";
+  const mobileLinks = landing ? landingNavLinks : appNavLinks;
 
   return (
     <header
@@ -51,190 +57,157 @@ export function Navbar({ variant = "light", landing = false }: NavbarProps) {
           : "border-b border-border bg-bg/90 text-text-primary backdrop-blur-sm",
       )}
     >
-      <div className="mx-auto flex h-14 max-w-[1280px] items-center gap-4 px-6 md:h-16 lg:px-12">
-        <SheghlniLogo variant={variant} />
+      <div
+        className={cn(
+          "mx-auto flex max-w-[1280px] flex-col",
+          landing ? "px-4 md:px-6 lg:px-12" : "px-4 md:px-6 lg:px-12",
+        )}
+      >
+        <div className="flex h-14 items-center gap-3 md:h-16">
+          <SheghlniLogo variant={variant} />
 
-        {isDark ? (
-          <>
-            <nav className="ml-auto hidden items-center gap-6 md:flex">
-              {darkNavLinks.map((link) => (
+          {isDark ? (
+            <>
+              <nav className="ml-auto hidden items-center gap-6 md:flex">
+                {landingNavLinks
+                  .filter((link) => link.variant !== "cta")
+                  .map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="text-sm font-medium text-cream-100 transition ease-default duration-default hover:text-cream-50"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
                 <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm font-medium text-cream-100 transition ease-default duration-default hover:text-cream-50"
+                  href="/sign-up/"
+                  className="inline-flex h-8 shrink-0 items-center justify-center rounded-full bg-cta px-3.5 text-sm font-semibold leading-none text-white no-underline transition ease-default duration-default hover:bg-cta-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
                 >
-                  {link.label}
+                  Get started
                 </Link>
-              ))}
-              <Link
-                href="/sign-up/"
-                className="inline-flex h-7 max-h-7 shrink-0 items-center justify-center self-center rounded-full bg-cta px-3 text-xs font-semibold leading-none text-white no-underline transition ease-default duration-default hover:bg-cta-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-0 md:h-8 md:max-h-8 md:px-3.5 md:text-sm"
-              >
-                Get started
-              </Link>
-              <ThemeToggle variant="dark" />
-            </nav>
+                <ThemeToggle variant="dark" />
+              </nav>
 
-            <div className="ml-auto flex items-center gap-2 md:hidden">
-              <ThemeToggle variant="dark" />
-              <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-                <SheetTrigger
-                  className="inline-flex size-icon items-center justify-center rounded-full text-cream-100 hover:bg-white/10"
-                  aria-label="Open menu"
-                >
-                  <Menu className="size-icon-sm" />
-                </SheetTrigger>
-                <SheetContent side="bottom">
-                  <SheetHeader>
-                    <SheetTitle>Menu</SheetTitle>
-                  </SheetHeader>
-                  <nav className="flex flex-col gap-1">
-                    {darkNavLinks.map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        onClick={() => setMobileOpen(false)}
-                        className="rounded-lg px-3 py-3 text-base font-medium text-text-primary hover:bg-bg-elevated-2"
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                    <Link
-                      href="/sign-up/"
-                      onClick={() => setMobileOpen(false)}
-                      className="mt-2 inline-flex h-9 items-center justify-center rounded-full bg-cta text-sm font-medium text-white no-underline hover:bg-cta-hover"
-                    >
-                      Get started
-                    </Link>
-                  </nav>
-                </SheetContent>
-              </Sheet>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="mx-4 hidden flex-1 md:block md:max-w-md lg:max-w-lg xl:max-w-xl">
-              <div className="relative">
-                <Search className="pointer-events-none absolute left-3.5 top-1/2 size-icon-md -translate-y-1/2 text-text-tertiary" />
-                <Input
-                  type="search"
-                  placeholder="What do you need help with?"
-                  className="h-10 border-border bg-bg-elevated pl-10"
-                  aria-label="Search services"
-                />
+              <button
+                type="button"
+                onClick={() => setMobileOpen(true)}
+                className="ml-auto inline-flex size-11 items-center justify-center rounded-full text-cream-100 hover:bg-white/10 md:hidden"
+                aria-label="Open menu"
+              >
+                <Menu className="size-5" />
+              </button>
+              <MobileNavDrawer
+                open={mobileOpen}
+                onOpenChange={setMobileOpen}
+                links={landingNavLinks}
+                themeVariant="dark"
+                title="Explore Sheghlni"
+              />
+            </>
+          ) : (
+            <>
+              <div className="mx-4 hidden flex-1 md:block md:max-w-md lg:max-w-lg xl:max-w-xl">
+                <div className="relative">
+                  <Search className="pointer-events-none absolute left-3.5 top-1/2 size-icon-md -translate-y-1/2 text-text-tertiary" />
+                  <Input
+                    type="search"
+                    placeholder="What do you need help with?"
+                    className="h-10 border-border bg-bg-elevated pl-10"
+                    aria-label="Search services"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="ml-auto flex items-center gap-1 sm:gap-2">
-              <Link
-                href="/search/"
-                className="inline-flex size-icon shrink-0 items-center justify-center rounded-full text-text-secondary transition ease-default duration-default hover:bg-bg-elevated-2 md:hidden"
-                aria-label="Search"
-              >
-                <Search className="size-icon-sm" strokeWidth={1.75} />
-              </Link>
-
-              <Link
-                href="/account/notifications/"
-                className="relative inline-flex size-icon shrink-0 items-center justify-center rounded-full text-text-secondary transition ease-default duration-default hover:bg-bg-elevated-2"
-                aria-label={
-                  unreadNotifications > 0
-                    ? `Notifications, ${unreadNotifications} unread`
-                    : "Notifications"
-                }
-              >
-                <Bell className="size-icon-sm" strokeWidth={1.75} />
-                {unreadNotifications > 0 && (
-                  <span className="absolute right-1.5 top-1.5 size-icon-xs rounded-full bg-clay-500 ring-2 ring-bg" />
-                )}
-              </Link>
-
-              <ThemeToggle variant="light" />
-
-              <DropdownMenu>
-                <DropdownMenuTrigger
-                  className={cn(
-                    "inline-flex shrink-0 items-center gap-2 rounded-full border-0 bg-transparent p-0.5",
-                    "transition ease-default duration-default",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cta focus-visible:ring-offset-2 focus-visible:ring-offset-bg",
-                    "lg:hover:bg-bg-elevated-2",
+              <div className="ml-auto hidden items-center gap-1 sm:gap-2 md:flex">
+                <Link
+                  href="/account/notifications/"
+                  className="relative inline-flex size-icon shrink-0 items-center justify-center rounded-full text-text-secondary transition ease-default duration-default hover:bg-bg-elevated-2"
+                  aria-label={
+                    unreadNotifications > 0
+                      ? `Notifications, ${unreadNotifications} unread`
+                      : "Notifications"
+                  }
+                >
+                  <Bell className="size-icon-sm" strokeWidth={1.75} />
+                  {unreadNotifications > 0 && (
+                    <span className="absolute right-1.5 top-1.5 size-icon-xs rounded-full bg-clay-500 ring-2 ring-bg" />
                   )}
-                >
-                  <span
-                    aria-hidden
-                    className="inline-flex size-icon items-center justify-center rounded-full border-0 bg-bronze-500 text-sm font-semibold leading-none text-white"
-                  >
-                    A
-                  </span>
-                  <span className="hidden pr-1.5 text-sm font-medium text-text-primary lg:inline">
-                    Alex
-                  </span>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem asChild>
-                    <Link href="/account/">Profile</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/bookings/">Bookings</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/inbox/">Inbox</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
-                    <Link href="/account/settings/">Settings</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/sign-in/">Sign out</Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                </Link>
 
-              <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-                <SheetTrigger
-                  className="inline-flex size-icon shrink-0 items-center justify-center rounded-full text-text-secondary hover:bg-bg-elevated-2 md:hidden"
-                  aria-label="Open menu"
-                >
-                  <Menu className="size-icon-sm" />
-                </SheetTrigger>
-                <SheetContent side="bottom">
-                  <SheetHeader>
-                    <SheetTitle>Menu</SheetTitle>
-                  </SheetHeader>
-                  <nav className="flex flex-col gap-1">
-                    <Link
-                      href="/search/"
-                      onClick={() => setMobileOpen(false)}
-                      className="rounded-lg px-3 py-3 text-base font-medium text-text-primary hover:bg-bg-elevated-2"
+                <ThemeToggle variant="light" />
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    className={cn(
+                      "inline-flex shrink-0 items-center gap-2 rounded-full border-0 bg-transparent p-0.5",
+                      "transition ease-default duration-default",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cta focus-visible:ring-offset-2 focus-visible:ring-offset-bg",
+                      "lg:hover:bg-bg-elevated-2",
+                    )}
+                  >
+                    <span
+                      aria-hidden
+                      className="inline-flex size-icon items-center justify-center rounded-full border-0 bg-bronze-500 text-sm font-semibold leading-none text-white"
                     >
-                      Search
-                    </Link>
-                    <Link
-                      href="/inbox/"
-                      onClick={() => setMobileOpen(false)}
-                      className="rounded-lg px-3 py-3 text-base font-medium text-text-primary hover:bg-bg-elevated-2"
-                    >
-                      Inbox
-                    </Link>
-                    <Link
-                      href="/bookings/"
-                      onClick={() => setMobileOpen(false)}
-                      className="rounded-lg px-3 py-3 text-base font-medium text-text-primary hover:bg-bg-elevated-2"
-                    >
-                      Bookings
-                    </Link>
-                    <Link
-                      href="/account/"
-                      onClick={() => setMobileOpen(false)}
-                      className="rounded-lg px-3 py-3 text-base font-medium text-text-primary hover:bg-bg-elevated-2"
-                    >
-                      Profile
-                    </Link>
-                  </nav>
-                </SheetContent>
-              </Sheet>
-            </div>
-          </>
+                      A
+                    </span>
+                    <span className="hidden pr-1.5 text-sm font-medium text-text-primary lg:inline">
+                      Alex
+                    </span>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem asChild>
+                      <Link href="/account/">Profile</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/bookings/">Bookings</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/inbox/">Inbox</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href="/account/settings/">Settings</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/sign-in/">Sign out</Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setMobileOpen(true)}
+                className="ml-auto inline-flex size-11 items-center justify-center rounded-full text-text-secondary hover:bg-bg-elevated-2 md:hidden"
+                aria-label="Open menu"
+              >
+                <Menu className="size-5" />
+              </button>
+              <MobileNavDrawer
+                open={mobileOpen}
+                onOpenChange={setMobileOpen}
+                links={appNavLinks}
+                themeVariant="light"
+                title="Your account"
+              />
+            </>
+          )}
+        </div>
+
+        {!isDark && !landing && (
+          <div className="pb-3 md:hidden">
+            <Link
+              href="/search/"
+              className="flex min-h-11 w-full items-center gap-3 rounded-2xl border border-border bg-bg-elevated px-4 text-left text-text-tertiary shadow-sm transition hover:border-cta/30"
+            >
+              <Search className="size-5 shrink-0" strokeWidth={1.75} />
+              <span className="text-[0.9375rem] text-text-tertiary">
+                What do you need help with?
+              </span>
+            </Link>
+          </div>
         )}
       </div>
     </header>

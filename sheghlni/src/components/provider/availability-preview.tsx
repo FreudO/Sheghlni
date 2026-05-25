@@ -32,9 +32,11 @@ export function AvailabilityPreview({ days }: AvailabilityPreviewProps) {
   }, [today]);
 
   return (
-    <section className="mt-12 border-t border-border pt-10">
+    <section className="mt-8 border-t border-border pt-8 md:mt-12 md:pt-10">
       <div className="flex items-center justify-between gap-4">
-        <h2 className="font-display text-h2 text-text-primary">Availability</h2>
+        <h2 className="font-display text-[1.375rem] font-medium text-text-primary md:text-h2">
+          Availability
+        </h2>
         <button
           type="button"
           onClick={() => setCalendarOpen(true)}
@@ -44,14 +46,14 @@ export function AvailabilityPreview({ days }: AvailabilityPreviewProps) {
         </button>
       </div>
 
-      <div className="mt-6 grid grid-cols-7 gap-2">
+      <div className="-mx-4 mt-6 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-7 md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">
         {days.map((day) => {
           const isToday = day.date.getTime() === today.getTime();
           return (
             <div
               key={day.date.toISOString()}
               className={cn(
-                "rounded-xl border px-2 py-3 text-center",
+                "min-w-12 shrink-0 rounded-xl border px-2 py-3 text-center md:min-w-0 md:shrink",
                 isToday
                   ? "border-bronze-500 bg-bronze-500/10"
                   : "border-border bg-bg-elevated",

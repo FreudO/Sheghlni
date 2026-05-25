@@ -32,7 +32,7 @@ export function Gallery({ images, alt, onOpenLightbox }: GalleryProps) {
   };
 
   return (
-    <section className="-mx-6 lg:mx-0">
+    <section className="-mx-4 md:-mx-6 lg:mx-0">
       <div className="relative hidden h-[28rem] lg:block">
         <div className="grid h-full grid-cols-[1.2fr_1fr] gap-2">
           <button
@@ -41,7 +41,12 @@ export function Gallery({ images, alt, onOpenLightbox }: GalleryProps) {
             className="relative overflow-hidden rounded-xl"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={hero} alt={alt} className="size-full object-cover" />
+            <img
+              src={hero}
+              alt={alt}
+              loading="lazy"
+              className="size-full object-cover"
+            />
           </button>
           <div className="grid grid-cols-2 grid-rows-2 gap-2">
             {paddedGrid.map((image, index) => (
@@ -55,6 +60,7 @@ export function Gallery({ images, alt, onOpenLightbox }: GalleryProps) {
                 <img
                   src={image}
                   alt={`${alt} ${index + 2}`}
+                  loading="lazy"
                   className="size-full object-cover"
                 />
               </button>
@@ -76,12 +82,13 @@ export function Gallery({ images, alt, onOpenLightbox }: GalleryProps) {
           dragConstraints={{ left: 0, right: 0 }}
           style={{ x }}
           onDragEnd={handleDragEnd}
-          className="relative aspect-[4/3] overflow-hidden"
+          className="relative aspect-[4/3] w-full overflow-hidden"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={images[mobileIndex]}
             alt={`${alt} ${mobileIndex + 1}`}
+            loading="lazy"
             className="size-full object-cover"
             onClick={() => onOpenLightbox(mobileIndex)}
           />
@@ -103,15 +110,14 @@ export function Gallery({ images, alt, onOpenLightbox }: GalleryProps) {
             />
           ))}
         </div>
+        <button
+          type="button"
+          onClick={() => onOpenLightbox(mobileIndex)}
+          className="absolute bottom-4 right-4 rounded-full bg-ink-900/65 px-3 py-1.5 text-caption font-medium text-cream-50 backdrop-blur-sm"
+        >
+          Show all photos
+        </button>
       </div>
     </section>
   );
 }
-
-
-
-
-
-
-
-

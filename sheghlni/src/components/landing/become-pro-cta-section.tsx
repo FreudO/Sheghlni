@@ -3,13 +3,13 @@ import { Reveal } from "@/components/landing/reveal";
 
 export function BecomeProCtaSection() {
   return (
-    <section className="bg-gradient-to-r from-bronze-600 to-bronze-500 py-14 md:py-16">
-      <div className="mx-auto max-w-[1280px] px-6 text-center lg:px-12">
+    <section className="bg-gradient-to-r from-bronze-600 to-bronze-500 py-8 md:py-14 lg:py-16">
+      <div className="mx-auto max-w-[1280px] px-4 text-center md:px-6 lg:px-12">
         <Reveal>
-          <h2 className="font-display text-display-lg text-white">
+          <h2 className="font-display text-[1.375rem] font-medium text-white md:text-display-lg">
             Turn your skills into income.
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-body-lg text-white/90">
+          <p className="mx-auto mt-4 max-w-2xl text-[0.9375rem] text-white/90 md:text-body-lg">
             Join 10,000+ pros earning on Sheghlni. Set your own rates. Keep 88%+
             of every booking.
           </p>

@@ -34,7 +34,7 @@ const tabs = [
   },
   {
     href: "/account/",
-    label: "Profile",
+    label: "Account",
     icon: User,
     match: (path: string) => path.startsWith("/account"),
   },
@@ -69,12 +69,12 @@ export function MobileTabBar() {
                 href={tab.href}
                 className={cn(
                   "relative flex flex-1 flex-col items-center justify-center gap-1 transition ease-default duration-default",
-                  isActive ? "text-cta" : "text-ink-300",
+                  isActive ? "text-bronze-500" : "text-ink-300",
                 )}
               >
                 <span className="relative">
                   <Icon
-                    className={cn("size-icon-sm", isActive && "fill-cta/15")}
+                    className={cn("size-icon-sm", isActive && "fill-bronze-500/15")}
                     strokeWidth={isActive ? 2.25 : 1.75}
                   />
                   {showBadge && (

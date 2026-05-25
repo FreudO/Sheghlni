@@ -29,8 +29,10 @@ function formatServicePrice(service: Service): string {
 
 export function ServicesTable({ services, providerHandle }: ServicesTableProps) {
   return (
-    <section className="mt-12 border-t border-border pt-10">
-      <h2 className="font-display text-h2 text-text-primary">Services & pricing</h2>
+    <section className="mt-8 border-t border-border pt-8 md:mt-12 md:pt-10">
+      <h2 className="font-display text-[1.375rem] font-medium text-text-primary md:text-h2">
+        Services & pricing
+      </h2>
 
       <div className="mt-6 hidden overflow-hidden rounded-2xl border border-border md:block">
         <table className="w-full text-left">
@@ -58,22 +60,26 @@ export function ServicesTable({ services, providerHandle }: ServicesTableProps) 
         </table>
       </div>
 
-      <div className="mt-6 space-y-4 md:hidden">
+      <div className="mt-6 space-y-3 md:hidden">
         {services.map((service) => (
           <article
             key={service.id}
             className="rounded-2xl border border-border bg-bg p-4"
           >
-            <p className="font-semibold text-text-primary">{service.title}</p>
-            <p className="mt-1 text-body-sm text-ink-500">{service.description}</p>
-            <p className="mt-3 text-body-sm font-medium text-text-primary">
-              {formatServicePrice(service)}
+            <div className="flex items-start justify-between gap-3">
+              <p className="font-semibold text-text-primary">{service.title}</p>
+              <p className="shrink-0 text-sm font-medium text-text-primary">
+                {formatServicePrice(service)}
+              </p>
+            </div>
+            <p className="mt-1 line-clamp-2 text-[0.8125rem] text-ink-500">
+              {service.description}
             </p>
             <Link
               href={`/inbox/?service=${service.id}&provider=${providerHandle}`}
-              className="mt-3 inline-block text-sm font-medium text-cta hover:underline"
+              className="mt-3 inline-flex min-h-11 items-center rounded-full border border-border px-4 text-sm font-medium text-text-primary hover:bg-bg-elevated"
             >
-              Request this service
+              Request
             </Link>
           </article>
         ))}
@@ -81,6 +87,3 @@ export function ServicesTable({ services, providerHandle }: ServicesTableProps) 
     </section>
   );
 }
-
-
-

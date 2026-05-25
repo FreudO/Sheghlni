@@ -25,8 +25,8 @@ const TRUST_ITEMS = [
 
 export function TrustBandSection() {
   return (
-    <section className="bg-ink-900 py-12 md:py-16">
-      <div className="mx-auto max-w-[1280px] px-6 lg:px-12">
+    <section className="bg-ink-900 py-8 md:py-12 lg:py-16">
+      <div className="mx-auto max-w-[1280px] px-4 md:px-6 lg:px-12">
         <RevealGroup className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {TRUST_ITEMS.map((item) => (
             <RevealItem key={item.title}>
@@ -34,7 +34,7 @@ export function TrustBandSection() {
                 <div className="text-3xl" aria-hidden>
                   {item.emoji}
                 </div>
-                <h3 className="mt-3 font-display text-h3 text-cream-50">
+                <h3 className="mt-3 font-display text-[1.125rem] font-medium text-cream-50 md:text-h3">
                   {item.title}
                 </h3>
                 <p className="mt-2 text-body-sm text-cream-200">

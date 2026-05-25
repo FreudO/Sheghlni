@@ -53,13 +53,36 @@ export function FilterBar({
   return (
     <>
       <div className="sticky top-14 z-40 border-b border-border bg-bg/95 backdrop-blur-md md:top-16">
-        <div className="mx-auto max-w-[1280px] px-6 py-3 lg:px-12">
-          <div className="flex flex-wrap items-center gap-2">
+        <div className="mx-auto max-w-[1280px] px-4 py-3 md:px-6 lg:px-12">
+          <div className="flex items-center justify-between gap-3 md:hidden">
+            <p className="text-[0.8125rem] text-text-secondary">
+              <span className="font-medium text-text-primary">{resultCount}</span> pros
+              in {locationLabel}
+            </p>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="inline-flex min-h-11 items-center gap-1 rounded-full border border-border bg-bg px-3 text-[0.8125rem] text-text-secondary">
+                {sortLabel}
+                <ChevronDown className="size-3.5" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {SORT_OPTIONS.map((option) => (
+                  <DropdownMenuItem
+                    key={option.value}
+                    onClick={() => onPatch({ sort: option.value as SearchSort })}
+                  >
+                    {option.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          <div className="-mx-4 mt-3 flex items-center gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:mx-0 md:mt-0 md:flex-wrap md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">
             <Button
               type="button"
               variant="outline"
               size="sm"
-              className="rounded-full"
+              className="shrink-0 rounded-full"
               onClick={() => onDrawerOpenChange(true)}
             >
               <SlidersHorizontal className="size-3.5" />
@@ -67,7 +90,7 @@ export function FilterBar({
             </Button>
 
             <DropdownMenu>
-              <DropdownMenuTrigger className="inline-flex h-7 items-center gap-1 rounded-full border border-border bg-bg px-3 text-[0.8rem] text-text-secondary hover:border-cta/40">
+              <DropdownMenuTrigger className="inline-flex h-9 shrink-0 items-center gap-1 rounded-full border border-border bg-bg px-3 text-[0.8rem] text-text-secondary hover:border-cta/40">
                 {getCategoryLabel(state.categorySlug)}
                 <ChevronDown className="size-3.5" />
               </DropdownMenuTrigger>
@@ -97,7 +120,7 @@ export function FilterBar({
                   })
                 }
                 className={cn(
-                  "rounded-full border px-3 py-1 text-[0.8rem] transition",
+                  "shrink-0 rounded-full border px-3 py-1.5 text-[0.8rem] transition",
                   state.minRating === chip.value
                     ? "border-cta bg-cta/10 text-cta"
                     : "border-border text-text-secondary hover:border-cta/40",
@@ -111,7 +134,7 @@ export function FilterBar({
               type="button"
               onClick={() => onPatch({ verified: state.verified ? undefined : true })}
               className={cn(
-                "rounded-full border px-3 py-1 text-[0.8rem] transition",
+                "shrink-0 rounded-full border px-3 py-1.5 text-[0.8rem] transition",
                 state.verified
                   ? "border-cta bg-cta/10 text-cta"
                   : "border-border text-text-secondary hover:border-cta/40",
@@ -128,7 +151,7 @@ export function FilterBar({
                 })
               }
               className={cn(
-                "rounded-full border px-3 py-1 text-[0.8rem] transition",
+                "shrink-0 rounded-full border px-3 py-1.5 text-[0.8rem] transition",
                 state.maxPriceCents
                   ? "border-cta bg-cta/10 text-cta"
                   : "border-border text-text-secondary hover:border-cta/40",
@@ -137,12 +160,12 @@ export function FilterBar({
               Under $150
             </button>
 
-            <p className="w-full text-caption text-ink-300 sm:ml-auto sm:w-auto">
+            <p className="hidden text-caption text-ink-300 sm:ml-auto md:block">
               {resultCount} pros in {locationLabel}
             </p>
 
             <DropdownMenu>
-              <DropdownMenuTrigger className="ml-auto inline-flex h-7 items-center gap-1 rounded-full border border-border bg-bg px-3 text-[0.8rem] text-text-secondary hover:border-cta/40 sm:ml-0">
+              <DropdownMenuTrigger className="ml-auto hidden h-9 shrink-0 items-center gap-1 rounded-full border border-border bg-bg px-3 text-[0.8rem] text-text-secondary hover:border-cta/40 md:inline-flex">
                 {sortLabel}
                 <ChevronDown className="size-3.5" />
               </DropdownMenuTrigger>

@@ -29,7 +29,9 @@ export function PageShell({
       {fullWidth ? (
         children
       ) : (
-        <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-12">{children}</div>
+        <div className="mx-auto w-full max-w-[1280px] px-4 md:px-6 lg:px-12">
+          {children}
+        </div>
       )}
     </main>
   );

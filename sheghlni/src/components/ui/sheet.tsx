@@ -52,7 +52,7 @@ function SheetContent({
           side === "bottom" &&
             "inset-x-0 bottom-0 max-h-[85vh] rounded-t-2xl border-t border-border p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
           side === "right" &&
-            "inset-y-0 right-0 h-full w-3/4 max-w-sm border-l border-border p-6 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right",
+            "inset-y-0 right-0 h-full w-full max-w-full border-l border-border data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
           className,
         )}
         {...props}

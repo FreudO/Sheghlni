@@ -188,8 +188,10 @@ export function ReviewsSection({ provider, reviews }: ReviewsSectionProps) {
   const canLoadMore = visibleCount < totalAvailable;
 
   return (
-    <section className="mt-12 border-t border-border pt-10">
-      <h2 className="font-display text-h2 text-text-primary">Reviews</h2>
+    <section className="mt-8 border-t border-border pt-8 md:mt-12 md:pt-10">
+      <h2 className="font-display text-[1.375rem] font-medium text-text-primary md:text-h2">
+        Reviews
+      </h2>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[16rem_1fr]">
         <div>
@@ -221,7 +223,7 @@ export function ReviewsSection({ provider, reviews }: ReviewsSectionProps) {
         </div>
 
         <div>
-          <div className="flex flex-wrap gap-2">
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:mx-0 md:flex-wrap md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">
             {(
               [
                 ["recent", "Most recent"],
@@ -235,7 +237,7 @@ export function ReviewsSection({ provider, reviews }: ReviewsSectionProps) {
                 type="button"
                 onClick={() => setSort(key)}
                 className={cn(
-                  "rounded-full border px-3 py-1 text-sm",
+                  "shrink-0 rounded-full border px-3 py-2 text-sm",
                   sort === key
                     ? "border-cta bg-cta/10 text-cta"
                     : "border-border text-text-secondary",

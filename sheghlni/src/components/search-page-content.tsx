@@ -92,7 +92,7 @@ export function SearchPageContent() {
       />
 
       <div className="grid flex-1 lg:grid-cols-[3fr_2fr]">
-        <section className="min-w-0 px-6 py-6 lg:px-12">
+        <section className="min-w-0 px-4 py-6 md:px-6 lg:px-12">
           {loading ? (
             <SearchSkeletonList />
           ) : results.length === 0 ? (
@@ -105,8 +105,15 @@ export function SearchPageContent() {
                   provider={provider}
                   highlighted={highlightedId === provider.id}
                   onHover={setHighlightedId}
+                  layout="mobile"
                 />
               ))}
+              <button
+                type="button"
+                className="mt-2 flex h-[3.25rem] w-full items-center justify-center rounded-2xl border border-border bg-bg text-[0.9375rem] font-medium text-text-primary transition hover:bg-bg-elevated md:hidden"
+              >
+                Load more
+              </button>
             </div>
           )}
         </section>
@@ -129,7 +136,7 @@ export function SearchPageContent() {
       <button
         type="button"
         onClick={() => setMapOpen(true)}
-        className="fixed bottom-[calc(4.5rem+env(safe-area-inset-bottom))] left-1/2 z-40 inline-flex -translate-x-1/2 items-center gap-2 rounded-full bg-ink-900 px-5 py-2.5 text-sm font-medium text-cream-50 shadow-xl lg:hidden"
+        className="fixed bottom-[calc(4rem+env(safe-area-inset-bottom)+0.5rem)] left-1/2 z-40 inline-flex min-h-11 -translate-x-1/2 items-center gap-2 rounded-full bg-ink-900 px-5 py-2.5 text-sm font-medium text-cream-50 shadow-xl lg:hidden"
       >
         🗺 Map
       </button>

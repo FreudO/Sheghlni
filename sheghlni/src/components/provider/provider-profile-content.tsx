@@ -83,7 +83,7 @@ export function ProviderProfileContent({
       <ProviderFaqSection faqs={getProviderFaqs(provider.id)} />
       <ProviderServiceArea provider={provider} />
 
-      <p className="mt-12 border-t border-border pt-8 pb-24 text-center text-sm text-ink-300 lg:pb-10">
+      <p className="mt-8 border-t border-border pt-8 pb-8 text-center text-sm text-ink-300 md:mt-12 md:pb-10">
         <Link href="/report/" className="hover:text-text-secondary hover:underline">
           Report this listing
         </Link>

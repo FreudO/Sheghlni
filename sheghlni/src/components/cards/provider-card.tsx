@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 type ProviderCardProps = {
   provider: Provider;
   className?: string;
+  layout?: "default" | "carousel";
 };
 
 function formatPrice(cents: number, unit: PricingUnit): string {
@@ -38,11 +39,16 @@ function formatDistance(miles: number): string {
   return `${formatted} mi away`;
 }
 
-export function ProviderCard({ provider, className }: ProviderCardProps) {
+export function ProviderCard({
+  provider,
+  className,
+  layout = "default",
+}: ProviderCardProps) {
   const [saved, setSaved] = useState(false);
   const [imageError, setImageError] = useState(false);
   const startingPrice = getProviderStartingPrice(provider.id);
   const isFastResponder = provider.responseTimeMinutes < 60;
+  const isCarousel = layout === "carousel";
 
   const badges = [
     provider.isTopRated && {
@@ -74,13 +80,22 @@ export function ProviderCard({ provider, className }: ProviderCardProps) {
   return (
     <article
       className={cn(
-        "group relative rounded-2xl border border-transparent bg-bg p-3 transition ease-default duration-default",
-        "hover:-translate-y-0.5 hover:border-border hover:shadow-lg",
+        "group relative overflow-hidden border border-transparent bg-bg transition ease-default duration-default",
+        isCarousel
+          ? "rounded-2xl p-0 hover:shadow-lg"
+          : "rounded-2xl p-3 hover:-translate-y-0.5 hover:border-border hover:shadow-lg",
         className,
       )}
     >
       <Link href={`/p/${provider.handle}/`} className="block">
-        <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-bg-elevated-2">
+        <div
+          className={cn(
+            "relative overflow-hidden bg-bg-elevated-2",
+            isCarousel
+              ? "aspect-video rounded-t-2xl"
+              : "aspect-[4/3] rounded-xl",
+          )}
+        >
           {imageError ? (
             <div className="flex size-full flex-col items-center justify-center gap-2 text-text-tertiary">
               <User className="size-10 stroke-[1.25]" />
@@ -99,45 +114,66 @@ export function ProviderCard({ provider, className }: ProviderCardProps) {
           )}
         </div>
 
-        <div className="mt-3 space-y-1">
-          <h3 className="truncate font-semibold text-text-primary">
+        <div className={cn(isCarousel ? "space-y-1 p-3.5" : "mt-3 space-y-1")}>
+          <h3
+            className={cn(
+              "truncate font-semibold text-text-primary",
+              isCarousel ? "text-base" : "",
+            )}
+          >
             {provider.businessName}
           </h3>
-          <p className="truncate text-body-sm text-text-secondary">
+          <p
+            className={cn(
+              "truncate text-text-secondary",
+              isCarousel ? "text-[0.8125rem]" : "text-body-sm",
+            )}
+          >
             {provider.headline}
           </p>
         </div>
 
-        <div className="mt-2 flex items-center gap-1.5 text-body-sm">
-          <Star className="size-icon-sm fill-star text-star" />
-          <span className="font-medium text-text-primary">
-            {provider.ratingAvg.toFixed(1)}
-          </span>
-          <span className="text-text-tertiary">({provider.ratingCount})</span>
-        </div>
-
         <div
           className={cn(
-            "mt-2 inline-flex items-center gap-1 text-caption",
-            isFastResponder ? "text-sage-500" : "text-text-tertiary",
+            "flex flex-wrap items-center gap-x-2 gap-y-0.5",
+            isCarousel ? "px-3.5" : "mt-2",
           )}
         >
-          <Clock className="size-3.5" />
-          {formatResponseTime(provider.responseTimeMinutes)}
+          <span className="inline-flex items-center gap-1 text-body-sm">
+            <Star className="size-3.5 fill-star text-star" />
+            <span className="font-medium text-text-primary">
+              {provider.ratingAvg.toFixed(1)}
+            </span>
+            <span className="text-text-tertiary">({provider.ratingCount})</span>
+          </span>
+          <span
+            className={cn(
+              "inline-flex items-center gap-1 text-[0.8125rem]",
+              isFastResponder ? "text-sage-500" : "text-text-tertiary",
+            )}
+          >
+            <Clock className="size-3" />
+            {formatResponseTime(provider.responseTimeMinutes)}
+          </span>
+          <span className="text-[0.8125rem] text-ink-400">
+            📍 {formatDistance(provider.distanceMi)}
+          </span>
         </div>
 
-        <p className="mt-1 inline-flex items-center gap-1 text-caption text-ink-400">
-          <span aria-hidden>📍</span>
-          {formatDistance(provider.distanceMi)}
-        </p>
-
         {startingPrice && (
-          <p className="mt-2 text-body-sm font-medium text-text-primary">
+          <p
+            className={cn(
+              "font-medium text-text-primary",
+              isCarousel
+                ? "px-3.5 pb-3.5 text-body-sm"
+                : "mt-2 text-body-sm",
+            )}
+          >
             {formatPrice(startingPrice.cents, startingPrice.unit)}
           </p>
         )}
 
-        {badges.length > 0 && (
+        {!isCarousel && badges.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-1.5">
             {badges.slice(0, 3).map((badge) => (
               <span
@@ -163,15 +199,15 @@ export function ProviderCard({ provider, className }: ProviderCardProps) {
         aria-pressed={saved}
         onClick={() => setSaved((current) => !current)}
         className={cn(
-          "absolute right-5 top-5 z-10 inline-flex h-[2rem] w-[2rem] items-center justify-center rounded-full border-0 bg-bg/90 backdrop-blur-sm transition ease-default duration-default",
+          "absolute z-10 inline-flex size-9 items-center justify-center rounded-full border-0 bg-bg/90 backdrop-blur-sm transition ease-default duration-default",
+          isCarousel ? "right-3 top-3" : "right-5 top-5",
           saved
             ? "text-clay-500"
             : "text-text-secondary hover:text-text-primary",
         )}
       >
-        <Heart className={cn("size-icon-sm", saved && "fill-current")} />
+        <Heart className={cn("size-4", saved && "fill-current")} />
       </button>
     </article>
   );
 }
-

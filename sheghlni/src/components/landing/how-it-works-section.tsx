@@ -42,10 +42,12 @@ const STEPS = [
 
 export function HowItWorksSection() {
   return (
-    <section className="bg-bg-elevated py-12 md:py-16">
-      <div className="mx-auto max-w-[1280px] px-6 lg:px-12">
+    <section className="bg-bg-elevated py-8 md:py-12 lg:py-16">
+      <div className="mx-auto max-w-[1280px] px-4 md:px-6 lg:px-12">
         <Reveal>
-          <h2 className="font-display text-h2 text-text-primary">How it works</h2>
+          <h2 className="font-display text-[1.375rem] font-medium text-text-primary md:text-h2">
+            How it works
+          </h2>
         </Reveal>
 
         <RevealGroup className="mt-10 grid gap-6 md:grid-cols-3">
@@ -59,7 +61,7 @@ export function HowItWorksSection() {
                 <h3 className="mt-4 font-display text-h3 text-text-primary">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-body text-text-secondary">
+                <p className="mt-2 text-[0.9375rem] text-text-secondary md:text-body">
                   {item.description}
                 </p>
               </article>
