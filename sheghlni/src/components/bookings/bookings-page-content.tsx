@@ -1,6 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { EmptyState } from "@/components/ui/empty-state";
+import { BookingsSkeleton } from "@/components/ui/skeletons/bookings-skeleton";
+import { useDelayedReady } from "@/hooks/use-delayed-ready";
 import { BookingCard } from "@/components/bookings/booking-card";
 import { ReviewModal } from "@/components/bookings/review-modal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,6 +17,7 @@ import {
 import { toast } from "@/lib/toast";
 
 export function BookingsPageContent() {
+  const ready = useDelayedReady();
   const allBookings = useMemo(() => getBookings(DEMO_USER_ID), []);
   const [tab, setTab] = useState<BookingsTab>("upcoming");
   const [reviewOverrides, setReviewOverrides] = useState<Set<string>>(
@@ -46,6 +50,10 @@ export function BookingsPageContent() {
     setReviewOverrides((prev) => new Set(prev).add(reviewModalBooking.id));
     toast.success("Review posted.");
   };
+
+  if (!ready) {
+    return <BookingsSkeleton />;
+  }
 
   return (
     <div className="relative">
@@ -137,9 +145,13 @@ function BookingList({
 }) {
   if (bookings.length === 0) {
     return (
-      <p className="rounded-2xl border border-dashed border-border py-12 text-center text-sm text-ink-300">
-        No bookings in this tab yet.
-      </p>
+      <EmptyState
+        illustration="empty-bookings"
+        title="No bookings in this tab"
+        subtitle="When you book a pro, your upcoming and past sessions will show up here."
+        actionLabel="Find a pro"
+        actionHref="/search/"
+      />
     );
   }
 

@@ -17,23 +17,23 @@ export function CategoryStrip() {
           </h2>
         </Reveal>
 
-        <div className="-mx-4 mt-6 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:mt-8 md:px-0 md:overflow-visible [&::-webkit-scrollbar]:hidden">
-          <div className="flex w-max snap-x snap-mandatory gap-3 md:w-full md:snap-none md:flex-wrap md:justify-between md:gap-4">
+        <div className="scrollbar-subtle -mx-4 mt-6 overflow-x-auto overscroll-x-contain px-4 pb-2 md:mx-0 md:mt-8 md:px-0">
+          <div className="flex w-max snap-x snap-mandatory gap-3 md:gap-4">
             {categories.map((category) => {
               const Icon = getCategoryIcon(category.iconName);
               return (
                 <Link
                   key={category.id}
                   href={`/search/?category=${category.slug}`}
-                  className="group flex w-[7.5rem] shrink-0 snap-start flex-col items-center gap-2 md:w-28"
+                  className="group flex w-[7.5rem] shrink-0 snap-start flex-col items-center gap-2 md:w-[6.75rem]"
                 >
-                  <div className="flex size-[7.5rem] items-center justify-center rounded-2xl border border-transparent bg-bg-elevated transition ease-default duration-default group-hover:scale-[1.03] group-hover:border-bronze-500 group-hover:shadow-md md:size-28">
+                  <div className="flex size-[7.5rem] items-center justify-center rounded-2xl border border-transparent bg-bg-elevated transition ease-default duration-default group-hover:scale-[1.03] group-hover:border-bronze-500 group-hover:shadow-md md:size-[6.75rem]">
                     <Icon
                       className="size-7 text-text-secondary transition ease-default duration-default group-hover:text-cta md:size-[2rem]"
                       strokeWidth={1.5}
                     />
                   </div>
-                  <span className="line-clamp-2 max-w-[7.5rem] text-center text-[0.6875rem] leading-snug text-text-primary md:max-w-28 md:text-caption">
+                  <span className="line-clamp-2 max-w-[7.5rem] text-center text-sm leading-snug text-text-primary md:max-w-[6.75rem]">
                     {category.name}
                   </span>
                 </Link>

@@ -169,7 +169,7 @@ export function ProEarnings() {
             </Button>
           </div>
         </div>
-        <div className="mt-4 overflow-x-auto rounded-xl border border-border">
+        <div className="scroll-fade-x mt-4 overflow-x-auto rounded-xl border border-border">
           <table className="w-full min-w-[640px] text-left text-sm">
             <thead className="border-b border-border bg-bg-elevated text-caption text-ink-300">
               <tr>

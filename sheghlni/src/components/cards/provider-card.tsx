@@ -94,8 +94,8 @@ export function ProviderCard({
       className={cn(
         "group relative overflow-hidden border border-transparent bg-bg transition ease-default duration-default",
         isCarousel
-          ? "rounded-2xl p-0 hover:shadow-lg"
-          : "rounded-2xl p-3 hover:-translate-y-0.5 hover:border-border hover:shadow-lg",
+          ? "card-interactive rounded-2xl p-0 hover:border-border"
+          : "card-interactive rounded-2xl p-3 hover:border-border",
         className,
       )}
     >

@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { MobileTabBar } from "@/components/layout/mobile-tab-bar";
 import { Navbar } from "@/components/layout/navbar";
 import { PageShell } from "@/components/layout/page-shell";
+import { PageTransition } from "@/components/layout/page-transition";
+import { SkipLink } from "@/components/layout/skip-link";
 import { DemoNav } from "@/components/dev/demo-nav";
 import { useTheme } from "@/components/theme-provider";
 import { getIsProMode, subscribeProMode } from "@/lib/auth/pro-mode-store";
@@ -47,6 +49,7 @@ export function LayoutBody({ children }: LayoutBodyProps) {
 
   return (
     <>
+      <SkipLink />
       <Navbar
         variant={useDarkNavbar ? "dark" : "light"}
         landing={isLanding}
@@ -56,8 +59,9 @@ export function LayoutBody({ children }: LayoutBodyProps) {
         fullWidth={isFullWidthPath(pathname) || isBecomeAPro || isAuth}
         reserveMobileTabBar={showMobileTabBar}
         flushTop={isLanding || isBecomeAPro || isAuth}
+        id="main-content"
       >
-        {children}
+        <PageTransition>{children}</PageTransition>
       </PageShell>
       {showMobileTabBar && <MobileTabBar />}
       <DemoNav />

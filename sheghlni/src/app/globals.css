@@ -128,6 +128,50 @@
     @apply border-border;
     outline-color: color-mix(in oklab, var(--ring) 50%, transparent);
   }
+
+  :focus-visible {
+    outline: 2px solid var(--bronze-500);
+    outline-offset: 2px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .card-interactive {
+    @apply transition ease-default duration-default;
+  }
+
+  .card-interactive:hover {
+    @apply -translate-y-0.5 shadow-md dark:shadow-[0_8px_24px_rgba(184,137,90,0.12)];
+  }
+
+  .dark .card-interactive:hover {
+    box-shadow: 0 8px 24px rgba(184, 137, 90, 0.12);
+  }
+
+  .scroll-fade-x {
+    position: relative;
+  }
+
+  .scroll-fade-x::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 2rem;
+    background: linear-gradient(to left, var(--bg), transparent);
+  }
   body {
     background-color: var(--bg);
     color: var(--text-primary);

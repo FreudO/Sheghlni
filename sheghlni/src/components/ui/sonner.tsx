@@ -6,6 +6,8 @@ export function Toaster() {
   return (
     <Sonner
       position="bottom-center"
+      richColors
+      closeButton
       toastOptions={{
         classNames: {
           toast:
@@ -16,7 +18,7 @@ export function Toaster() {
           error: "border-clay-500/30",
         },
       }}
-      closeButton
+      // Sonner renders aria-live region for announcements
     />
   );
 }

@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { ConversationList } from "@/components/messaging/conversation-list";
+import { EmptyState } from "@/components/ui/empty-state";
 import { cn } from "@/lib/utils";
 
 type InboxShellProps = {
@@ -48,13 +49,11 @@ export function InboxShell({ children }: InboxShellProps) {
 
 export function InboxEmptyState() {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
-      <p className="text-lg font-semibold text-text-primary">
-        Select a conversation
-      </p>
-      <p className="mt-2 max-w-sm text-sm text-ink-300">
-        Choose a pro from the list to view your messages, quotes, and bookings.
-      </p>
-    </div>
+    <EmptyState
+      illustration="empty-inbox"
+      title="Select a conversation"
+      subtitle="Choose a pro from the list to view your messages, quotes, and bookings."
+      className="flex-1 py-12"
+    />
   );
 }

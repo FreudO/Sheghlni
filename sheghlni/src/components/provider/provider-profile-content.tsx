@@ -19,6 +19,7 @@ import {
   formatStartingPriceLabel,
   StickyBookingBar,
 } from "@/components/provider/sticky-booking-bar";
+import { Reveal } from "@/components/landing/reveal";
 import {
   getAvailabilityPreview,
   getProviderCredentials,
@@ -63,31 +64,51 @@ export function ProviderProfileContent({
         onOpenLightbox={openLightbox}
       />
 
-      <ProviderHeader provider={provider} user={user} />
-      <ProviderAbout provider={provider} user={user} />
-      <ServicesTable
-        services={getServicesForProvider(provider.id)}
-        providerId={provider.id}
-      />
-      <AvailabilityPreview days={getAvailabilityPreview(provider.id)} />
-      <ProviderPortfolio
-        images={portfolioImages}
-        alt={provider.businessName}
-        onOpenLightbox={(index) => {
-          const offset = galleryImages.length;
-          openLightbox(offset + index);
-        }}
-      />
-      <ReviewsSection provider={provider} reviews={reviews} />
-      <ProviderCredentials credentials={getProviderCredentials(provider)} />
-      <ProviderFaqSection faqs={getProviderFaqs(provider.id)} />
-      <ProviderServiceArea provider={provider} />
+      <Reveal>
+        <ProviderHeader provider={provider} user={user} />
+      </Reveal>
+      <Reveal>
+        <ProviderAbout provider={provider} user={user} />
+      </Reveal>
+      <Reveal>
+        <ServicesTable
+          services={getServicesForProvider(provider.id)}
+          providerId={provider.id}
+        />
+      </Reveal>
+      <Reveal>
+        <AvailabilityPreview days={getAvailabilityPreview(provider.id)} />
+      </Reveal>
+      <Reveal>
+        <ProviderPortfolio
+          images={portfolioImages}
+          alt={provider.businessName}
+          onOpenLightbox={(index) => {
+            const offset = galleryImages.length;
+            openLightbox(offset + index);
+          }}
+        />
+      </Reveal>
+      <Reveal>
+        <ReviewsSection provider={provider} reviews={reviews} />
+      </Reveal>
+      <Reveal>
+        <ProviderCredentials credentials={getProviderCredentials(provider)} />
+      </Reveal>
+      <Reveal>
+        <ProviderFaqSection faqs={getProviderFaqs(provider.id)} />
+      </Reveal>
+      <Reveal>
+        <ProviderServiceArea provider={provider} />
+      </Reveal>
 
+      <Reveal>
       <p className="mt-8 border-t border-border pt-8 pb-8 text-center text-sm text-ink-300 md:mt-12 md:pb-10">
         <Link href="/report/" className="hover:text-text-secondary hover:underline">
           Report this listing
         </Link>
       </p>
+      </Reveal>
 
       <StickyBookingBar priceLabel={priceLabel} providerId={provider.id} />
 

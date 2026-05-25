@@ -1,5 +1,6 @@
 "use client";
 
+import { BookingStepActions } from "@/components/booking/booking-step-actions";
 import { CalendarPicker } from "@/components/booking/calendar-picker";
 import { Button } from "@/components/ui/button";
 import type { Service } from "@/lib/mock";
@@ -52,7 +53,7 @@ export function DateTimeStep({
                 type="button"
                 onClick={() => onTimeChange(slot)}
                 className={cn(
-                  "rounded-full border px-4 py-2 text-sm font-medium transition",
+                  "min-h-11 rounded-full border px-4 py-2 text-sm font-medium transition",
                   selectedTime === slot
                     ? "border-bronze-500 bg-bronze-500 text-cream-50"
                     : "border-border bg-bg text-text-primary hover:border-bronze-500/50",
@@ -74,13 +75,15 @@ export function DateTimeStep({
         </p>
       )}
 
-      <Button
-        type="button"
-        onClick={onContinue}
-        className="h-12 w-full rounded-full bg-cta text-base font-semibold text-white hover:bg-cta-hover"
-      >
-        Continue
-      </Button>
+      <BookingStepActions>
+        <Button
+          type="button"
+          onClick={onContinue}
+          className="h-12 min-h-11 w-full rounded-full bg-cta text-base font-semibold text-white hover:bg-cta-hover"
+        >
+          Continue
+        </Button>
+      </BookingStepActions>
     </div>
   );
 }

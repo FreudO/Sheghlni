@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Search } from "lucide-react";
+import { Reveal } from "@/components/landing/reveal";
 import { WhenPicker } from "@/components/landing/when-picker";
 import { ICON_STROKE } from "@/components/ui/icon-well";
 import { cn } from "@/lib/utils";
@@ -109,7 +110,7 @@ export function HeroSection() {
         aria-hidden
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-col items-center text-center">
+      <Reveal className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-col items-center text-center">
         <h1 className="max-w-3xl font-display text-[clamp(2rem,8vw,4rem)] leading-[1.05] font-medium text-cream-50 md:text-display-xl">
           What do you need help with?
         </h1>
@@ -134,7 +135,7 @@ export function HeroSection() {
             />
             <button
               type="submit"
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cta text-white transition ease-default duration-default hover:bg-cta-hover"
+              className="inline-flex h-11 min-h-11 w-11 min-w-11 shrink-0 items-center justify-center rounded-full bg-cta text-white transition ease-default duration-default hover:bg-cta-hover"
               aria-label="Search"
             >
               <Search className="h-5 w-5" strokeWidth={ICON_STROKE} />
@@ -214,7 +215,7 @@ export function HeroSection() {
             </Link>
           ))}
         </nav>
-      </div>
+      </Reveal>
     </section>
   );
 }

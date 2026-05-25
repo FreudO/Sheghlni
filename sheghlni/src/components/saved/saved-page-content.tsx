@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { ProviderCard } from "@/components/cards/provider-card";
+import { EmptyState } from "@/components/ui/empty-state";
+import { SavedSkeleton } from "@/components/ui/skeletons/saved-skeleton";
+import { useDelayedReady } from "@/hooks/use-delayed-ready";
 import {
   getSavedLists,
   getSavedProvidersForList,
@@ -10,6 +13,7 @@ import {
 } from "@/lib/saved/saved-store";
 
 export function SavedPageContent() {
+  const ready = useDelayedReady();
   const [lists, setLists] = useState(getSavedLists);
 
   useEffect(() => subscribeSaved(() => setLists(getSavedLists())), []);
@@ -19,16 +23,19 @@ export function SavedPageContent() {
     0,
   );
 
+  if (!ready) {
+    return <SavedSkeleton />;
+  }
+
   if (totalCount === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-border py-16 text-center">
-        <p className="font-display text-h3 text-text-primary">
-          Nothing saved yet
-        </p>
-        <p className="mt-2 text-sm text-ink-300">
-          Heart pros you like to find them later.
-        </p>
-      </div>
+      <EmptyState
+        illustration="empty-saved"
+        title="Nothing saved yet"
+        subtitle="Heart pros you like to find them later."
+        actionLabel="Browse pros"
+        actionHref="/search/"
+      />
     );
   }
 

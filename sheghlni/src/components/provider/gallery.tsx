@@ -44,7 +44,7 @@ export function Gallery({ images, alt, onOpenLightbox }: GalleryProps) {
             onClick={() => onOpenLightbox(0)}
             className={cn(GALLERY_FRAME_CLASS, "h-full min-h-0 rounded-xl")}
           >
-            <GalleryMediaImage src={hero} alt={alt} />
+            <GalleryMediaImage src={hero} alt={alt} priority width={1200} height={900} />
           </button>
           <div className="grid h-full min-h-0 grid-cols-2 grid-rows-2 gap-2">
             {paddedGrid.map((image, index) => (
@@ -80,6 +80,7 @@ export function Gallery({ images, alt, onOpenLightbox }: GalleryProps) {
             <GalleryMediaImage
               src={images[mobileIndex]}
               alt={`${alt} ${mobileIndex + 1}`}
+              priority={mobileIndex === 0}
               onClick={() => onOpenLightbox(mobileIndex)}
             />
           </motion.div>

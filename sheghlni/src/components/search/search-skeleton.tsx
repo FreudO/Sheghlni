@@ -1,6 +1,6 @@
 export function SearchSkeletonList({ count = 6 }: { count?: number }) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" role="status" aria-live="polite" aria-label="Loading search results">
       {Array.from({ length: count }).map((_, index) => (
         <article
           key={index}

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import {
-  ProviderProfileContent,
-} from "@/components/provider/provider-profile-content";
+import { ProviderProfilePageClient } from "@/components/provider/provider-profile-page-client";
 import {
   getProviderByHandle,
   getReviewsForProvider,
@@ -51,7 +49,11 @@ export default function ProviderProfilePage({ params }: ProviderPageProps) {
 
   return (
     <div className="pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0">
-      <ProviderProfileContent provider={provider} user={user} reviews={reviews} />
+      <ProviderProfilePageClient
+        provider={provider}
+        user={user}
+        reviews={reviews}
+      />
     </div>
   );
 }

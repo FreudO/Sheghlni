@@ -136,7 +136,7 @@ export function BookingFlowContent({
   }
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-6 md:px-6 md:py-10 lg:max-w-4xl lg:px-12">
+    <div className="mx-auto w-full max-w-3xl px-4 py-6 pb-28 md:px-6 md:py-10 md:pb-10 lg:max-w-4xl lg:px-12">
       {step < 4 && (
         <div className="mb-8 md:mb-10">
           <BookingStepper currentStep={step} />

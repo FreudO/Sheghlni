@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Search } from "lucide-react";
 import { useMessaging } from "@/components/messaging/messaging-context";
+import { EmptyState } from "@/components/ui/empty-state";
 import { formatConversationTime, isProviderOnlineMock } from "@/lib/messaging/format";
 import { ICON_STROKE } from "@/components/ui/icon-well";
 import { cn } from "@/lib/utils";
@@ -32,6 +33,7 @@ export function ConversationList({ activeConversationId }: ConversationListProps
           Messages
         </h1>
         <label className="relative block">
+          <span className="sr-only">Search conversations</span>
           <Search
             className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-ink-300"
             strokeWidth={ICON_STROKE}
@@ -42,18 +44,27 @@ export function ConversationList({ activeConversationId }: ConversationListProps
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search conversations"
-            className="h-10 w-full rounded-full border border-border bg-bg-elevated-2 pl-9 pr-3 text-sm text-text-primary outline-none placeholder:text-ink-300 focus-visible:border-bronze-500 focus-visible:ring-2 focus-visible:ring-bronze-500/20"
+            className="h-11 min-h-11 w-full rounded-full border border-border bg-bg-elevated-2 pl-9 pr-3 text-sm text-text-primary outline-none placeholder:text-ink-300 focus-visible:border-bronze-500 focus-visible:ring-2 focus-visible:ring-bronze-500/20"
           />
         </label>
       </div>
 
       <div className="min-h-0 flex-1 overflow-y-auto">
         {filtered.length === 0 ? (
-          <p className="px-4 py-12 text-center text-sm text-ink-300">
-            {query
-              ? "No conversations match your search."
-              : "Your conversations will live here. Message a pro to start one."}
-          </p>
+          query ? (
+            <p className="px-4 py-12 text-center text-sm text-ink-300" role="status">
+              No conversations match your search.
+            </p>
+          ) : (
+            <EmptyState
+              illustration="empty-inbox"
+              title="No messages yet"
+              subtitle="Your conversations will live here. Message a pro to start one."
+              actionLabel="Find a pro"
+              actionHref="/search/"
+              className="py-12"
+            />
+          )
         ) : (
           <ul>
             {filtered.map((conversation) => {

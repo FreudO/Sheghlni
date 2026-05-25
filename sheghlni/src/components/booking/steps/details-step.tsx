@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 import { Upload } from "lucide-react";
 import type { Service, User } from "@/lib/mock";
+import { BookingStepActions } from "@/components/booking/booking-step-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ICON_STROKE } from "@/components/ui/icon-well";
@@ -228,13 +229,15 @@ export function DetailsStep({
         </p>
       )}
 
-      <Button
-        type="button"
-        onClick={onContinue}
-        className="h-12 w-full rounded-full bg-cta text-base font-semibold text-white hover:bg-cta-hover"
-      >
-        Continue
-      </Button>
+      <BookingStepActions>
+        <Button
+          type="button"
+          onClick={onContinue}
+          className="h-12 min-h-11 w-full rounded-full bg-cta text-base font-semibold text-white hover:bg-cta-hover"
+        >
+          Continue
+        </Button>
+      </BookingStepActions>
     </div>
   );
 }

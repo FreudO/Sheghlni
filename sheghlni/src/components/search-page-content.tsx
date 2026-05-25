@@ -9,6 +9,7 @@ import { ResultCard } from "@/components/search/result-card";
 import { SearchEmptyState } from "@/components/search/search-empty-state";
 import { SearchSkeletonList } from "@/components/search/search-skeleton";
 import { getMapPins } from "@/lib/search/map-positions";
+import { DEMO_LOADING_MS } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import {
   buildSearchParams,
@@ -36,7 +37,7 @@ export function SearchPageContent() {
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setInitialLoading(false), 400);
+    const timer = window.setTimeout(() => setInitialLoading(false), DEMO_LOADING_MS);
     return () => window.clearTimeout(timer);
   }, []);
 

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import { BookingStepActions } from "@/components/booking/booking-step-actions";
 import { BookingSummary } from "@/components/booking/booking-summary";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -291,21 +292,23 @@ export function PaymentStep({
           </p>
         )}
 
-        <Button
-          type="button"
-          disabled={isSubmitting || !isPaymentValid(data)}
-          onClick={onConfirm}
-          className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-cta text-base font-semibold text-white hover:bg-cta-hover disabled:opacity-50"
-        >
-          {isSubmitting ? (
-            <>
-              <Loader2 className="size-5 animate-spin" />
-              Processing…
-            </>
-          ) : (
-            `Confirm booking — ${formatQuoteTotal(quote.totalCents)}`
-          )}
-        </Button>
+        <BookingStepActions className="mt-0 md:mt-6">
+          <Button
+            type="button"
+            disabled={isSubmitting || !isPaymentValid(data)}
+            onClick={onConfirm}
+            className="inline-flex h-14 min-h-11 w-full items-center justify-center gap-2 rounded-full bg-cta text-base font-semibold text-white hover:bg-cta-hover disabled:opacity-50"
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="size-5 animate-spin" aria-hidden />
+                Processing…
+              </>
+            ) : (
+              `Confirm booking — ${formatQuoteTotal(quote.totalCents)}`
+            )}
+          </Button>
+        </BookingStepActions>
       </div>
 
       <BookingSummary

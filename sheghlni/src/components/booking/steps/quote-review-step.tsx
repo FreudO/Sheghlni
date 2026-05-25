@@ -2,6 +2,7 @@
 
 import { BadgeCheck, CreditCard, Info, ShieldCheck } from "lucide-react";
 import type { Provider, Service, User } from "@/lib/mock";
+import { BookingStepActions } from "@/components/booking/booking-step-actions";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -129,13 +130,15 @@ export function QuoteReviewStep({
         </span>
       </div>
 
-      <Button
-        type="button"
-        onClick={onContinue}
-        className="h-12 w-full rounded-full bg-cta text-base font-semibold text-white hover:bg-cta-hover"
-      >
-        Confirm & pay
-      </Button>
+      <BookingStepActions>
+        <Button
+          type="button"
+          onClick={onContinue}
+          className="h-12 min-h-11 w-full rounded-full bg-cta text-base font-semibold text-white hover:bg-cta-hover"
+        >
+          Confirm & pay
+        </Button>
+      </BookingStepActions>
     </div>
   );
 }

@@ -6,6 +6,7 @@ type PageShellProps = {
   reserveMobileTabBar?: boolean;
   flushTop?: boolean;
   className?: string;
+  id?: string;
 };
 
 export function PageShell({
@@ -14,9 +15,11 @@ export function PageShell({
   reserveMobileTabBar = true,
   flushTop = false,
   className,
+  id,
 }: PageShellProps) {
   return (
     <main
+      id={id}
       className={cn(
         flushTop
           ? "min-h-dvh"

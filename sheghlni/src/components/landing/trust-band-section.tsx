@@ -5,7 +5,7 @@ import {
   ShieldCheck,
   Star,
 } from "lucide-react";
-import { Reveal, RevealGroup, RevealItem } from "@/components/landing/reveal";
+import { RevealGroup, RevealItem } from "@/components/landing/reveal";
 import { IconWell } from "@/components/ui/icon-well";
 
 const TRUST_ITEMS: {
@@ -63,23 +63,22 @@ export function TrustBandSection() {
   return (
     <section className="bg-ink-900 py-8 md:py-12 lg:py-16">
       <div className="mx-auto max-w-[1280px] px-4 md:px-6 lg:px-12">
-        <Reveal>
-          <div className="text-center">
-            <h2 className="font-display text-[1.375rem] font-medium text-cream-50 md:text-h2">
-              Book with confidence
-            </h2>
-            <p className="mx-auto mt-2 max-w-md text-sm text-cream-200/80">
-              Every booking is protected by verification, secure payments, and real reviews.
-            </p>
-          </div>
-        </Reveal>
-
-        <RevealGroup className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-6 lg:grid-cols-4 lg:gap-8">
-          {TRUST_ITEMS.map((item) => (
-            <RevealItem key={item.title} className="w-full">
-              <TrustItemCard {...item} />
-            </RevealItem>
-          ))}
+        <RevealGroup className="flex flex-col gap-4 sm:gap-5">
+          <RevealItem>
+            <div className="text-center">
+              <h2 className="font-display text-[1.375rem] font-medium text-cream-50 md:text-h2">
+                Book with confidence
+              </h2>
+              <p className="mx-auto mt-1.5 max-w-md text-sm text-cream-200/80">
+                Every booking is protected by verification, secure payments, and real reviews.
+              </p>
+            </div>
+          </RevealItem>
+          <RevealItem className="grid w-full grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4 lg:gap-8">
+            {TRUST_ITEMS.map((item) => (
+              <TrustItemCard key={item.title} {...item} />
+            ))}
+          </RevealItem>
         </RevealGroup>
       </div>
     </section>

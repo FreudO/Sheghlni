@@ -34,8 +34,8 @@ export function ServicesTable({ services, providerId }: ServicesTableProps) {
         Services & pricing
       </h2>
 
-      <div className="mt-6 hidden overflow-hidden rounded-2xl border border-border md:block">
-        <table className="w-full text-left">
+      <div className="scroll-fade-x mt-6 hidden overflow-x-auto rounded-2xl border border-border md:block">
+        <table className="w-full min-w-[40rem] text-left">
           <tbody>
             {services.map((service) => (
               <tr key={service.id} className="border-b border-border last:border-0">
