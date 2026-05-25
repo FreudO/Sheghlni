@@ -1,70 +1,85 @@
-import { RevealGroup, RevealItem } from "@/components/landing/reveal";
+import type { LucideIcon } from "lucide-react";
+import {
+  BadgeCheck,
+  CreditCard,
+  ShieldCheck,
+  Star,
+} from "lucide-react";
+import { Reveal, RevealGroup, RevealItem } from "@/components/landing/reveal";
+import { cn } from "@/lib/utils";
 
-const TRUST_ITEMS = [
+const TRUST_ITEMS: {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  iconClassName: string;
+}[] = [
   {
-    emoji: "🛡️",
     title: "Verified IDs",
     description: "Every pro passes identity verification",
+    icon: ShieldCheck,
+    iconClassName: "text-sage-500",
   },
   {
-    emoji: "💳",
     title: "Secure Payments",
     description: "Funds held in escrow until job completion",
+    icon: CreditCard,
+    iconClassName: "text-bronze-500",
   },
   {
-    emoji: "⭐",
     title: "Real Reviews",
     description: "From real customers who booked on Sheghlni",
+    icon: Star,
+    iconClassName: "text-gold-500",
   },
   {
-    emoji: "🔒",
     title: "Money-Back Guarantee",
     description: "Up to $1,000 coverage per booking",
+    icon: BadgeCheck,
+    iconClassName: "text-cream-100",
   },
 ];
+
+function TrustItemCard({
+  title,
+  description,
+  icon: Icon,
+  iconClassName,
+}: (typeof TRUST_ITEMS)[number]) {
+  return (
+    <article className="flex flex-col items-center rounded-2xl bg-white/5 px-4 py-5 text-center sm:py-6">
+      <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/10">
+        <Icon className={cn("size-6", iconClassName)} strokeWidth={1.5} aria-hidden />
+      </span>
+      <h3 className="mt-3 text-base font-semibold leading-tight text-cream-50 sm:font-display sm:text-[1.125rem] sm:font-medium md:text-h3">
+        {title}
+      </h3>
+      <p className="mt-1 line-clamp-2 text-sm leading-snug text-cream-200/90 sm:line-clamp-none sm:text-body-sm">
+        {description}
+      </p>
+    </article>
+  );
+}
 
 export function TrustBandSection() {
   return (
     <section className="bg-ink-900 py-8 md:py-12 lg:py-16">
       <div className="mx-auto max-w-[1280px] px-4 md:px-6 lg:px-12">
-        {/* Mobile: compact horizontal rows */}
-        <RevealGroup className="flex flex-col gap-2 sm:hidden">
+        <Reveal>
+          <div className="text-center">
+            <h2 className="font-display text-[1.375rem] font-medium text-cream-50 md:text-h2">
+              Book with confidence
+            </h2>
+            <p className="mx-auto mt-2 max-w-md text-sm text-cream-200/80">
+              Every booking is protected by verification, secure payments, and real reviews.
+            </p>
+          </div>
+        </Reveal>
+
+        <RevealGroup className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-6 lg:grid-cols-4 lg:gap-8">
           {TRUST_ITEMS.map((item) => (
             <RevealItem key={item.title} className="w-full">
-              <div className="flex flex-row items-center gap-4 rounded-2xl bg-white/5 px-4 py-4">
-                <div className="flex w-12 shrink-0 items-center justify-center">
-                  <span className="text-2xl leading-none" aria-hidden>
-                    {item.emoji}
-                  </span>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="text-base font-semibold leading-tight text-cream-50">
-                    {item.title}
-                  </h3>
-                  <p className="mt-1 line-clamp-2 text-sm leading-snug text-cream-200/90">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-            </RevealItem>
-          ))}
-        </RevealGroup>
-
-        {/* sm+: centered grid */}
-        <RevealGroup className="hidden gap-8 sm:grid sm:grid-cols-2 lg:grid-cols-4">
-          {TRUST_ITEMS.map((item) => (
-            <RevealItem key={item.title}>
-              <div className="text-center">
-                <div className="text-3xl" aria-hidden>
-                  {item.emoji}
-                </div>
-                <h3 className="mt-3 font-display text-[1.125rem] font-medium text-cream-50 md:text-h3">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-body-sm text-cream-200">
-                  {item.description}
-                </p>
-              </div>
+              <TrustItemCard {...item} />
             </RevealItem>
           ))}
         </RevealGroup>
