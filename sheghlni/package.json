@@ -11,7 +11,8 @@
     "prebuild": "node scripts/check-no-dev-server.mjs",
     "build": "npm run clean:next && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "cd .. && husky sheghlni/.husky"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
@@ -48,6 +49,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.28",
+    "husky": "^9.1.7",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
